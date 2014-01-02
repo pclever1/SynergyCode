@@ -8,7 +8,7 @@ A Node.js FTP Alternative designed with collaberation in mind.
 ##How to Use
 
 
-License
+##License
 
 CodeBox is released under a GNU General Public License
 
