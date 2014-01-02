@@ -11,7 +11,7 @@ A Node.js FTP Alternative designed with collaberation in mind.
 ##License
 
 
-CodeBox is a Copyright of Peter Cleverdon, Will Jones, Chris Keith, Nick Lawrence, Anirudh Mathukumilli, and Matthew Price
+CodeBox is a Copyright of Peter Cleverdon, Will Jones, Chris Keith, Nick Lawrence, Anirudh Mathukumilli, and Matthew Price.
 
 CodeBox is released under a GNU General Public License
 
