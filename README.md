@@ -6,7 +6,7 @@ A Node.js FTP Alternative designed with collaberation in mind.
 [Developer Site](https://sites.google.com/site/opensourcesoftwaredevelopment/)
 
 ##How to Use
-
+	node app
 
 ##License
 
