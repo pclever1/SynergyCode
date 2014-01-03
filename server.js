@@ -1,30 +1,42 @@
 var http = require('http');
 var fs = require('fs');
-var express = require('express');
-var app = express();
-
-http.createServer(function(request, response){
-	fs.readFile('./public/index.html', function(err, html){
-		if(err){
-			throw err;
-		}
-		response.writeHeader(200, {"Content-Type": "text/html"});  
-        response.write(html);  
-		response.end();
-	});
-}).listen(8124);
 
 var htmldata;
-
-fs.readFile('./public/create.html', "utf-8",function(error, data){
-	if(error){
-		throw error;
-	}
-	htmldata = data;
+var svr = http.createServer(function(req, resp) {
+  fs.readFile(__dirname + '/public/index.html', function (err, data) {
+    if (err) {
+      resp.writeHead(500);
+      return resp.end('Error loading html page');
+    }
+	resp.writeHead(200, { 'Content-Type': 'text/html' });
+	resp.end(data);
+	//htmldata = data;
+	//console.log(data);
+	
+	//socket.on('send', function (data) {
+		//io.sockets.emit('message', data);
+	//});
+	fs.readFile(__dirname + '/public/create.html' , "utf8" , function(err,data){
+		if(err){
+			resp.writeHead(500);
+			return resp.end('Error loading html page');
+		}
+		htmldata = data;		
+	});
+	
+});
+	
 });
 
-app.get('/user/:id', function(req, res) {
-    res.send('user ' + req.params.id);
+var io = require('socket.io').listen(svr);
+
+io.sockets.on('connection', function (socket) {
+    socket.emit('message', { message: htmldata });
+    socket.on('send', function (data) {
+        io.sockets.emit('message', data);
+    });
 });
 
-console.log('Server running at http://127.0.0.1:8124/');
+svr.listen(80, function() {
+  console.log('The server is listening on port 80');
+});

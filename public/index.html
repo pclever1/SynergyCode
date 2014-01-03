@@ -2,16 +2,52 @@
 <html>
 
 <head>
+
+<script type = "text/javascript" src = "/jquery/jquery.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+
 </head>
 
 <body>
 
 <h1>Welcome to Code Box!</h1>
-<a href = "create.html">Create File</a>
+<a href = "create.html" onClick = "reRoute()">Create File</a>
 <br/>
+<p id = "testParagraph"></p>
+<form>
+<textarea id = "editor" rows = "10" cols = "80"></textarea>
+</form>
 
-<input type = "text" name = "editor" rows = "10" cols = "70"></input>
 
+
+<script>
+	
+	window.onload = function() {
+		alert('onload entered');
+		var socket = io.connect('http://localhost');
+		alert('got past io connection');
+		socket.on('message', function (data) {
+		alert('message received');
+        if(data.message) {
+            var messages = [];
+			messages.push(data.message);
+            var html = '';
+            for(var i=0; i<messages.length; i++) {
+                html += messages[i] + '<br />';
+            }
+			document.getElementById('editor').value = html;
+           alert(html);
+        } else {
+            console.log("There is a problem:", data);
+        }
+    });
+		alert("the frontend is running");
+	}
+	function reRoute(){
+		alert('rerouting');
+		//socket.emit('send', { message: 'hello' });
+	}
+</script>
 
 </body>
 
