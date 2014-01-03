@@ -1,8 +1,12 @@
 var http = require('http');
-var fs = require('fs');
+var fs = require('fs'),
+	url = require("url"),
+	path = require("path");
 
 var svr = http.createServer(function(req, resp) {
-  fs.readFile(__dirname + '/public/index.html', function (err, data) {
+	var uri = url.parse(req.url).pathname
+    , filename = path.join(process.cwd(), uri);
+  fs.readFile(__dirname + '/public/' + uri, function (err, data) {
     if (err) {
       resp.writeHead(500);
       return resp.end('Error loading html page');
@@ -30,6 +34,8 @@ io.sockets.on('connection', function (socket) {
 		});
 	});	
 });
+
+
 
 
 svr.listen(3000, function() {
