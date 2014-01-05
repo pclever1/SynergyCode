@@ -7,20 +7,33 @@ V 0.0.1 (1/10/2014)
   -opening and saving
 -CodeMirror
 
+
 V 0.0.2 (1/17/2014)
--
+-configuration file
+-efficient save protocols
+-start website styleing
+-database
 
 
 V 0.0.3 (1/24/2014)
+-colaboration start
+-further web styling improvements
 
 
 V 0.0.4 (1/31/2014)
+-user permissions/accounts
 
 
 V 0.0.5 (2/7/2014)
+-installer
+-create files
 
 
 V 0.0.6 (2/14/2014)
+-colaboration finish
 
 
 V 0.1 (2/21/2014)
+-Colaboration
+-User Permissionos
+-Webserver
