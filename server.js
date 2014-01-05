@@ -1,12 +1,8 @@
 var http = require('http');
-var fs = require('fs'),
-	url = require("url"),
-	path = require("path");
+var fs = require('fs');
 
 var svr = http.createServer(function(req, resp) {
-	var uri = url.parse(req.url).pathname
-    , filename = path.join(process.cwd(), uri);
-  fs.readFile(__dirname + '/public/' + uri, function (err, data) {
+  fs.readFile(__dirname + '/public/index.html', function (err, data) {
     if (err) {
       resp.writeHead(500);
       return resp.end('Error loading html page');
@@ -17,14 +13,12 @@ var svr = http.createServer(function(req, resp) {
 });
 
 var io = require('socket.io').listen(svr);
+var fileName;
 
 io.sockets.on('connection', function (socket) {
     socket.emit('message', { message: 'hello' });
-   // socket.on('send', function (data) {
-     //   io.sockets.emit('message', data);
-    //});
 	socket.on('fileLoad', function(data){
-		console.log(data.message);
+		fileName = data.message;
 		fs.readFile(__dirname + '/public/' + data.message , "utf8" , function(err,data){
 			if(err){
 				resp.writeHead(500);
@@ -33,11 +27,18 @@ io.sockets.on('connection', function (socket) {
 			io.sockets.emit('fileData', {message: data});
 		});
 	});	
+	socket.on('fileChanged', function(data){
+		console.log('FILE CHANGED ON SERVER SIDE');
+		fs.writeFile('public/' + fileName, data.message, function(err){
+			if(err){
+				throw err;
+			}
+			console.log("THE FILE WAS SAVED");
+		});
+	});
 });
 
 
-
-
-svr.listen(3000, function() {
-  console.log('The server is listening on port 3000');
+svr.listen(80, function() {
+  console.log('The server is listening on port 80');
 });
