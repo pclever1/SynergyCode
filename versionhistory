@@ -1,7 +1,13 @@
+V 0.0.1 (1/10/2014)
+-Node setup
+-SocketIO
+-Webserver
+  -uses port 135
+-File routing
+  -opening and saving
+-CodeMirror
 
-V 0.0.1
--Initial upload
--...
+
 
 V 0.0.2
 
