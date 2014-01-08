@@ -1,0 +1,83 @@
+<html>
+
+<head>
+<title><%= title %></title>
+<script src="/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<style>
+table{
+        border: 1px solid black;
+        font-size: 18px;
+        text-align: center;
+}
+h2{
+        text-decoration: underline;
+        padding-left: 20px;
+        padding-right: 20px;
+}
+.selector:hover{
+        border: 1px solid red;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>Welcome to Code Box!</h1>
+<a href = "create.html" onClick = "reRoute()">Create File</a>
+<br/>
+
+<table>
+<tr>
+        <td><h2>Files</h2></td>
+</tr>
+<tr>
+        <td class = "selector" onClick = "fileLoader('testFile1.html')">File1</td>
+</tr>
+<tr>
+        <td class = "selector" onClick = "fileLoader('testFile2.html')">File2</td>
+</tr>
+</table>
+
+<form>
+<textarea id = "editor" rows = "10" cols = "80"></textarea>
+</form>
+
+
+<script>
+        var socket = io.connect('http://localhost');
+        var loadedFileName;
+        
+        window.onload = function() {
+                alert('onload entered');
+                alert('got past io connection');
+                socket.on('message', function (data) {
+                        alert('ready to go');
+        });
+                alert("the frontend is running");
+        }
+        function reRoute(){
+                alert('rerouting');
+        }
+        
+        function fileLoader(fileName){
+                loadedFileName = fileName;
+                socket.emit('fileLoad', {message: fileName});
+        }
+        socket.on('fileData', function(data){
+                alert('FILE DATA RECEIVED BY frontend');
+                alert(data.message);
+                document.getElementById('editor').value = data.message;
+        });
+        
+        $('#editor').bind('input propertychange', function(){
+                var fileContent = $('#editor').val();
+                socket.emit('fileChanged', {message: fileContent});
+        });
+        
+</script>
+
+</body>
+
+</html>
