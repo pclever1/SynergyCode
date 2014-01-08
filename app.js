@@ -14,7 +14,7 @@ var fs = require('fs');
 var app = express();
 
 // all environments
-app.set('port', process.env.PORT || 135);
+app.set('port', process.env.PORT || 8080);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(express.favicon());
@@ -30,15 +30,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
 if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
+    app.use(express.errorHandler());
 }
 
 app.get('/', routes.index);
-app.get('/users', user.list);
+app.get('/users/:id', user.list);
 app.get('/filetest', filetest.index);
 
-var server = http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+var server = http.createServer(app).listen(app.get('port'), function () {
+    console.log('Express server listening on port ' + app.get('port'));
 });
 
 
@@ -49,25 +49,28 @@ var connect = require('connect');
 
 
 sio.sockets.on('connection', function (socket) {
-    console.log('A socket with sessionID ' + socket.handshake.sessionID 
-        + ' connected!');
-  socket.emit('message', { message: 'hello' });
-        socket.on('fileLoad', function(data){
-                fileName = data.message;
-                fs.readFile(__dirname + '/public/' + data.message , "utf8" , function(err,data){
-                        if(err){
-                                throw err;
-                        }
-                        socket.emit('fileData', {message: data});
-                });
-        });        
-        socket.on('fileChanged', function(data){
-                console.log('FILE CHANGED ON SERVER SIDE');
-                fs.writeFile('public/' + fileName, data.message, function(err){
-                        if(err){
-                                throw err;
-                        }
-                        console.log("THE FILE WAS SAVED");
-                });
+    console.log('   [info] A socket with sessionID ' + socket.handshake.sessionID + ' connected!');
+    socket.emit('message', {
+        message: 'hello'
+    });
+    socket.on('fileLoad', function (data) {
+        fileName = data.message;
+        fs.readFile(__dirname + '/public/' + data.message, "utf8", function (err, data) {
+            if (err) {
+                throw err;
+            }
+            socket.emit('fileData', {
+                message: data
+            });
         });
+    });
+    socket.on('fileChanged', function (data) {
+        console.log('FILE CHANGED ON SERVER SIDE');
+        fs.writeFile('public/' + fileName, data.message, function (err) {
+            if (err) {
+                throw err;
+            }
+            console.log("THE FILE WAS SAVED");
+        });
+    });
 });
