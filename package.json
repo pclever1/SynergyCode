@@ -8,6 +8,8 @@
   "dependencies": {
     "express": "3.4.7",
     "ejs": "*",
-    "stylus": "*"
+    "stylus": "*",
+    "passport": "*",
+    "socket.io": "*"
   }
 }
