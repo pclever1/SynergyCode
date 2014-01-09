@@ -38,8 +38,10 @@ app.get('/users/:id', user.list);
 app.get('/filetest', filetest.index);
 
 var server = http.createServer(app).listen(app.get('port'), function () {
-    console.log('Express server listening on port ' + app.get('port'));
+    console.info('Express server listening on port ' + app.get('port'));
 });
+
+
 
 
 var sio = io.listen(server);
@@ -47,7 +49,7 @@ var sio = io.listen(server);
 var connect = require('connect');
  
 sio.sockets.on('connection', function (socket) {
-    console.log('   [info] A socket with sessionID ' + socket.handshake.sessionID + ' connected!');
+    console.info('   [info] A socket with sessionID ' + socket.handshake.sessionID + ' connected!');
     socket.emit('message', {
         message: 'hello'
     });
