@@ -3,7 +3,7 @@ V 0.0.1 (1/10/2014)
 -Node setup
 -SocketIO
 -Webserver
-  -uses port 135
+  -uses port 8080
 -File routing
   -opening and saving
 -CodeMirror
@@ -12,7 +12,7 @@ V 0.0.1 (1/10/2014)
 V 0.0.2 (1/17/2014)
 -configuration file
 -efficient save protocols
--start website styleing
+-start website styling
 -database
 
 
@@ -27,7 +27,7 @@ V 0.0.4 (1/31/2014)
 
 
 V 0.0.5 (2/7/2014)
--installer
+-installer (npm?)
 -create files
 
 
