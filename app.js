@@ -46,8 +46,6 @@ var sio = io.listen(server);
 
 var connect = require('connect');
  
-
-
 sio.sockets.on('connection', function (socket) {
     console.log('   [info] A socket with sessionID ' + socket.handshake.sessionID + ' connected!');
     socket.emit('message', {
