@@ -1,15 +1,32 @@
 {
   "name": "CodeBox",
   "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "start": "node app"
-  },
+  "description": "A FTP alternative",
+  "main": "app.js",
   "dependencies": {
-    "express": "3.4.7",
-    "ejs": "*",
-    "stylus": "*",
-    "passport": "*",
-    "socket.io": "*"
-  }
+    "connect": "~2.12.0",
+    "socket.io": "~0.9.16",
+    "stylus": "~0.41.3",
+    "cookie": "~0.1.0",
+    "passport": "~0.1.18",
+    "ejs": "~0.8.5",
+    "express": "~3.4.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CodeBoxJS/CodeBox.git"
+  },
+  "keywords": [
+    "ftp"
+  ],
+  "author": "CodeBoxJS",
+  "license": "GNU General Public License",
+  "bugs": {
+    "url": "https://github.com/CodeBoxJS/CodeBox/issues"
+  },
+  "homepage": "https://github.com/CodeBoxJS/CodeBox"
 }
