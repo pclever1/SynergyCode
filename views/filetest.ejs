@@ -50,8 +50,8 @@ h2{
         var loadedFileName;
         
         window.onload = function() {
-                alert('onload entered');
-                alert('got past io connection');
+                //alert('onload entered');
+                //alert('got past io connection');
                 socket.on('message', function (data) {
                         alert('ready to go');
         });
@@ -66,8 +66,8 @@ h2{
                 socket.emit('fileLoad', {message: fileName});
         }
         socket.on('fileData', function(data){
-                alert('FILE DATA RECEIVED BY frontend');
-                alert(data.message);
+                //alert('FILE DATA RECEIVED BY frontend');
+                //alert(data.message);
                 document.getElementById('editor').value = data.message;
         });
         
