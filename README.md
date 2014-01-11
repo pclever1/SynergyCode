@@ -12,4 +12,4 @@ A Node.js FTP Alternative designed with collaberation in mind.
 ##How to Use
 	node app
 	
-	[Wiki](http://www.wiki.thecodebox.org/)
+[Wiki](http://www.wiki.thecodebox.org/)
