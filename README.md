@@ -5,7 +5,11 @@ A Node.js FTP Alternative designed with collaberation in mind.
 
 [Wiki](http://www.wiki.thecodebox.org/)
 
-[Releases](https://github.com/CodeBoxJS/CodeBox/releases)
+
+
+[Latest Build](https://github.com/CodeBoxJS/CodeBox/releases/tag/v0.0.1)
 
 ##How to Use
 	node app
+	
+	[Wiki](http://www.wiki.thecodebox.org/)
