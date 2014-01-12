@@ -1,38 +1,37 @@
 V 0.0.1 (1/10/2014)
--Pick domain name
 -Node setup
 -SocketIO
 -Webserver
-  -uses port 8080
+  -Uses port 8080
 -File routing
-  -opening and saving
+  -Opening and saving
 -CodeMirror
 
 
 V 0.0.2 (1/17/2014)
--configuration file
--efficient save protocols
--start website styling
--database
+-Configuration file
+-Efficient save protocols
+-Start website styling
+-Database
 
 
 V 0.0.3 (1/24/2014)
--colaboration start
--further web styling improvements
+-Colaboration start
+-Further web styling improvements
 
 
 V 0.0.4 (1/31/2014)
--user permissions/accounts
--admin panel
+-User permissions/accounts
+-Admin panel
 
 
 V 0.0.5 (2/7/2014)
--installer (npm?)
--create files
+-Installer (npm?)
+-Create files
 
 
 V 0.0.6 (2/14/2014)
--colaboration finish
+-Colaboration finish
 
 
 V 0.1 (2/21/2014)
