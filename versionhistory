@@ -12,12 +12,14 @@ V 0.0.2 (1/17/2014)
 -Configuration file
 -Efficient save protocols
 -Start website styling
--Database
+-Database/file structure
+-live preview window of code started
 
 
 V 0.0.3 (1/24/2014)
 -Colaboration start
 -Further web styling improvements
+-live preview finished
 
 
 V 0.0.4 (1/31/2014)
