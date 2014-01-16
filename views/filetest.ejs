@@ -5,7 +5,7 @@
 <script src="/socket.io/socket.io.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <style>
-table{
+table#selectMenu{
         border: 1px solid black;
         font-size: 18px;
         text-align: center;
@@ -18,17 +18,53 @@ h2{
 .selector:hover{
         border: 1px solid red;
 }
+
+#mainTable{
+        width: 100%;
+        height: 100%;
+        padding-top: 20px;
+}
+
+#mainTable td{
+        width: 50%;
+        height: 100%;
+        padding-top:0px;
+        padding-bottom:0px;
+        padding-right: 10px;
+        text-align: center;
+        font-weight: bold;
+}
+#editor{
+        width: 100%;
+        height:100%;
+        resize: vertical;
+}
+[name = preview]{
+        width: 100%;
+        height:100%;
+        min-width: 100%;
+        border: 1px solid black;
+}
+
+body{
+        font-family: Symbol;
+}
+
+h1{
+        border-bottom: 1px solid gray;
+        font-size: 200%;
+}
 </style>
 
 </head>
 
 <body>
 
-<h1>Welcome to Code Box!</h1>
+<h1>Welcome to FC Protocol!</h1>
 <a href = "create.html" onClick = "reRoute()">Create File</a>
 <br/>
 
-<table>
+<table id = "selectMenu">
 <tr>
         <td><h2>Files</h2></td>
 </tr>
@@ -40,22 +76,26 @@ h2{
 </tr>
 </table>
 
-<form>
-<textarea id = "editor" rows = "10" cols = "80"></textarea>
-</form>
-
+<table id = "mainTable">
+        <tr>
+                <td>Code</td>
+                <td>Live Preview</td>
+        </tr>
+        <tr>
+                <td><textarea id = "editor" rows = "20"></textarea></td>
+                <td><iframe name = "preview"></iframe></td>
+        </tr>
+</table>
 
 <script>
-        var socket = io.connect('http://thecodebox.herokuapp.com/');
+        
+        var socket = io.connect('http://localhost');
         var loadedFileName;
         
         window.onload = function() {
-                //alert('onload entered');
-                //alert('got past io connection');
                 socket.on('message', function (data) {
-                        alert('ready to go');
+                        alert('Code Box is ready to go!');
         });
-                //alert("the frontend is running");
         }
         function reRoute(){
                 alert('rerouting');
@@ -65,15 +105,21 @@ h2{
                 loadedFileName = fileName;
                 socket.emit('fileLoad', {message: fileName});
         }
+        
+        function preview(file){
+                var html = $.parseHTML(file, document, true);
+                $('[name="preview"]').contents().find("html").html(html);
+        }
+        
         socket.on('fileData', function(data){
-                //alert('FILE DATA RECEIVED BY frontend');
-                //alert(data.message);
                 document.getElementById('editor').value = data.message;
+                preview(data.message);
         });
         
         $('#editor').bind('input propertychange', function(){
-                var fileContent = $('#editor').val();
-                socket.emit('fileChanged', {message: fileContent});
+                var fileData = $('#editor').val();
+                preview(fileData);
+                socket.emit('fileChanged', {message: fileData});
         });
         
 </script>

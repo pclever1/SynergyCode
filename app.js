@@ -37,8 +37,8 @@ app.get('/', routes.index);
 app.get('/users/:id', user.list);
 app.get('/filetest', filetest.index);
 
-var server = http.createServer(app).listen(app.get('port'), function () {
-    console.info('Express server listening on port ' + app.get('port'));
+var server = http.createServer(app).listen(/*app.get('port')*/80, function () {
+    console.info('Express server listening on port ' + 80);//app.get('port'));
 });
 
 
