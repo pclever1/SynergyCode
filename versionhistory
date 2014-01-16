@@ -10,10 +10,13 @@ V 0.0.1 (1/10/2014)
 
 V 0.0.2 (1/17/2014)
 -Configuration file
+  -Existing File Structure
+  -Users
 -Efficient save protocols
 -Start website styling
 -Database/file structure
 -live preview window of code started
+-Upload files
 
 
 V 0.0.3 (1/24/2014)
