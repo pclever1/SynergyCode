@@ -20,5 +20,9 @@ yes
 yes
 
 
-#Enabled file types
+#Editable file types
 HTML, HTM, CSS
+
+
+#Uploadable file types
+JPG, JPEG, PNG, GIF, ZIP, TAR
