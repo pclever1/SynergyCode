@@ -50,7 +50,7 @@ var connect = require('connect');
  
 sio.sockets.on('connection', function (socket) {
     console.info('   [info] A socket with sessionID ' + socket.handshake.sessionID + ' connected!');
-    socket.emit('message', { message: 'welcome to the chat' });
+    socket.emit('message', { message: 'Welcome to the chat!' });
     socket.on('send', function (data) {
         sio.sockets.emit('message', data);
     });

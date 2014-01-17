@@ -1,7 +1,7 @@
 window.onload = function() {
  
     var messages = [];
-    var socket = io.connect('http://localhost');
+    var socket = io.connect('http://67.166.48.206:3000');
     var field = document.getElementById("field");
     var sendButton = document.getElementById("send");
     var content = document.getElementById("content");
@@ -22,12 +22,25 @@ window.onload = function() {
     });
  
     sendButton.onclick = function() {
+        sendMessage();
+    };
+    sendMessage = function() {
         if(name.value == "") {
             alert("Please type your name!");
-        } else {
+        } else if(field.value == ""){
+            alert("Please type a message!");
+        }else{
             var text = field.value;
             socket.emit('send', { message: text, username: name.value });
+            field.value = "";
         }
     };
  
 }
+$(document).ready(function() {
+    $("#field").keyup(function(e) {
+        if(e.keyCode == 13) {
+            sendMessage();
+        }
+    });
+});
