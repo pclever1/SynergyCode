@@ -31,7 +31,7 @@
      styleActiveLine: true,
      lineNumbers: true,
      lineWrapping: true,
-     theme: 'ambiance'
+     theme: 'monokai'
  });
  editor.on('change', function (cMirror) {
      var fileData = editor.getValue();
@@ -65,3 +65,7 @@ var chatOpen = false;
     }    
     e.stopPropagation();
  });
+
+$(document).ready(function(){
+     $('#editor').css("width", screen.width/2);
+});
