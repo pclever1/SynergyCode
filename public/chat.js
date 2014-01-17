@@ -18,6 +18,7 @@ window.onload = function() {
             }
             content.innerHTML = html;
             $('#content').scrollTop($('#content')[0].scrollHeight);
+            emojify.run(document.getElementById("chat"));
         } else {
             console.log("There is a problem:", data);
         }
@@ -44,5 +45,13 @@ $(document).ready(function() {
         if(e.keyCode == 13) {
             sendMessage();
         }
+    });
+    emojify.setConfig({
+        emoticons_enabled: true,
+        people_enabled: true,
+        nature_enabled: true,
+        objects_enabled: true,
+        places_enabled: true,
+        symbols_enabled: true
     });
 });
