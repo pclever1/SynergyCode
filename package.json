@@ -1,6 +1,6 @@
 {
-  "name": "CodeBox",
-  "version": "0.0.1",
+  "name": "SynergyCode",
+  "version": "0.0.2",
   "description": "A FTP alternative",
   "main": "app.js",
   "dependencies": {
@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/CodeBoxJS/CodeBox.git"
+    "url": "https://github.com/CodeBoxJS/SynergyCode.git"
   },
   "keywords": [
     "ftp"
@@ -28,7 +28,7 @@
   "author": "CodeBoxJS",
   "license": "GNU General Public License",
   "bugs": {
-    "url": "https://github.com/CodeBoxJS/CodeBox/issues"
+    "url": "https://github.com/CodeBoxJS/SynergyCode/issues"
   },
-  "homepage": "https://github.com/CodeBoxJS/CodeBox"
+  "homepage": "https://github.com/CodeBoxJS/SynergyCode"
 }
