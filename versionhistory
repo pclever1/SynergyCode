@@ -5,7 +5,6 @@ V 0.0.1 (1/10/2014)
   -Uses port 8080
 -File routing
   -Opening and saving
--CodeMirror
 
 
 V 0.0.2 (1/17/2014)
@@ -13,10 +12,12 @@ V 0.0.2 (1/17/2014)
   -Existing File Structure
   -Users
 -Efficient save protocols
+-CodeMirror
 -Start website styling
 -display file structure
 -live preview window of code started
--Upload files
+-Upload/create files
+-Chating (text only)
 
 
 V 0.0.3 (1/24/2014)
