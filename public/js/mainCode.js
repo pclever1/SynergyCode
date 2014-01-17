@@ -1,4 +1,4 @@
- var socket = io.connect('http://localhost');
+ var socket = io.connect(location.hostname);
  var loadedFileName;
  var messages = [];
  var field = document.getElementById("field");
