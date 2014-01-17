@@ -2,11 +2,9 @@
 #Version 0.0.2
 #Date 1/17/2014
 
-#Install directory
-
 
 #Web public root directory
-
+~/var/www
 
 #Port
 8080
@@ -20,5 +18,9 @@ yes
 yes
 
 
-#Enabled file types
+#Editable file types
 HTML, HTM, CSS
+
+
+#Uploadable file types
+JPG, JPEG, PNG, GIF, ZIP, TAR
