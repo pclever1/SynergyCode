@@ -6,7 +6,7 @@
 
 
 #Web public root directory
-
+~/var/www
 
 #Port
 8080
