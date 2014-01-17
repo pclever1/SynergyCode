@@ -10,7 +10,8 @@
     "cookie": "~0.1.0",
     "passport": "~0.1.18",
     "ejs": "~0.8.5",
-    "express": "~3.4.7"
+    "express": "~3.4.7",
+    "debug": "*"
   },
   "devDependencies": {},
   "scripts": {

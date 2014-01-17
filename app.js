@@ -14,7 +14,7 @@ var fs = require('fs');
 var app = express();
 
 // all environments
-app.set('port', process.env.PORT || 8080);
+app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(express.favicon());
@@ -37,8 +37,8 @@ app.get('/', routes.index);
 app.get('/users/:id', user.list);
 app.get('/filetest', filetest.index);
 
-var server = http.createServer(app).listen(/*app.get('port')*/80, function () {
-    console.info('Express server listening on port ' + 80);//app.get('port'));
+var server = http.createServer(app).listen(app.get('port'), function () {
+    console.info('Express server listening on port ' + app.get('port'));//app.get('port'));
 });
 
 

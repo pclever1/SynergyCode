@@ -4,6 +4,10 @@
 <title><%= title %></title>
 <script src="/socket.io/socket.io.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="stylesheets/codemirror.css">
+<script src="codemirror.js"></script>
+<script src="xml.js"></script>
+<script src="active-line.js"></script>
 <style>
 table#selectMenu{
         border: 1px solid black;
@@ -24,14 +28,16 @@ h2{
         height: 100%;
         padding-top: 20px;
 }
+#mainTable #headerow {
+        height: 10%;
+        text-align: center;
+}
 
 #mainTable td{
         width: 50%;
-        height: 100%;
         padding-top:0px;
         padding-bottom:0px;
         padding-right: 10px;
-        text-align: center;
         font-weight: bold;
 }
 #editor{
@@ -46,9 +52,6 @@ h2{
         border: 1px solid black;
 }
 
-body{
-        font-family: Symbol;
-}
 
 h1{
         border-bottom: 1px solid gray;
@@ -77,7 +80,7 @@ h1{
 </table>
 
 <table id = "mainTable">
-        <tr>
+        <tr id = "headerow">
                 <td>Code</td>
                 <td>Live Preview</td>
         </tr>
@@ -88,40 +91,49 @@ h1{
 </table>
 
 <script>
-        
         var socket = io.connect('http://localhost');
         var loadedFileName;
-        
-        window.onload = function() {
-                socket.on('message', function (data) {
-                        alert('Code Box is ready to go!');
+
+        window.onload = function () {
+            socket.on('message', function (data) {
+                alert('Its ready to go!');
+            });
+        }
+
+        function reRoute() {
+            alert('rerouting');
+        }
+
+        function fileLoader(fileName) {
+            loadedFileName = fileName;
+            socket.emit('fileLoad', {
+                message: fileName
+            });
+        }
+
+        function preview(file) {
+            var html = $.parseHTML(file, document, true);
+            $('[name="preview"]').contents().find("html").html(html);
+        }
+
+        socket.on('fileData', function (data) {
+            editor.setValue(data.message);
+            preview(data.message);
         });
-        }
-        function reRoute(){
-                alert('rerouting');
-        }
-        
-        function fileLoader(fileName){
-                loadedFileName = fileName;
-                socket.emit('fileLoad', {message: fileName});
-        }
-        
-        function preview(file){
-                var html = $.parseHTML(file, document, true);
-                $('[name="preview"]').contents().find("html").html(html);
-        }
-        
-        socket.on('fileData', function(data){
-                document.getElementById('editor').value = data.message;
-                preview(data.message);
+
+        var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
+            mode: "application/xml",
+            styleActiveLine: true,
+            lineNumbers: true,
+            lineWrapping: true
         });
-        
-        $('#editor').bind('input propertychange', function(){
-                var fileData = $('#editor').val();
+        editor.on('change',function(cMirror){
+                var fileData = editor.getValue();
                 preview(fileData);
-                socket.emit('fileChanged', {message: fileData});
+                socket.emit('fileChanged', {
+                        message: fileData
+                });
         });
-        
 </script>
 
 </body>
