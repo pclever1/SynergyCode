@@ -16,7 +16,7 @@ window.onload = function() {
 
                 html += messages[i].message + '<br />';
             }
-            html.stripTags;
+            html.replace( /<.*?>/g, '' );
             content.innerHTML = html;
             $('#content').scrollTop($('#content')[0].scrollHeight);
         } else {
