@@ -3,7 +3,8 @@
 <head>
 <title><%= title %></title>
 <script src="/socket.io/socket.io.js"></script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="jqueryFileTree/jqueryFileTree.js"></script>
 <link rel="stylesheet" href="stylesheets/filetest.css">
 <link rel="stylesheet" type="text/css" href="stylesheets/codemirror.css">
 <script src="codemirror.js"></script>
@@ -18,7 +19,7 @@
 <a href = "create.html" onClick = "reRoute()">Create File</a>
 <br/>
 
-<table id = "selectMenu">
+<!-- <table id = "selectMenu">
 <tr>
         <td><h2>Files</h2></td>
 </tr>
@@ -28,7 +29,11 @@
 <tr>
         <td class = "selector" onClick = "fileLoader('testFile2.html')">File2</td>
 </tr>
-</table>
+</table> -->
+
+<div id = "filetree">
+    
+</div>
 
 <table id = "mainTable">
         <tr id = "headerow">
@@ -48,12 +53,14 @@
         window.onload = function () {
             socket.on('message', function (data) {
                 alert('Its ready to go!');
-            });
+            }); 
         }
 
-        function reRoute() {
-            alert('rerouting');
-        }
+       $(document).ready( function() {
+            $('#filetree').fileTree({ root: 'editableFiles' , script: 'jqueryFileTree/connectors/jqueryFileTree.asp'}, function(file) {
+                alert(file);
+            });
+        });
 
         function fileLoader(fileName) {
             loadedFileName = fileName;
@@ -76,7 +83,8 @@
             mode: "application/xml",
             styleActiveLine: true,
             lineNumbers: true,
-            lineWrapping: true
+            lineWrapping: true,
+            theme: 'monokai'
         });
         editor.on('change',function(cMirror){
                 var fileData = editor.getValue();
