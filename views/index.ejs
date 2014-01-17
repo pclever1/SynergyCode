@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title>"Real time web chat"</title>
     <link rel="stylesheet" href="stylesheets/reset.css">
 	<link rel="stylesheet" href="stylesheets/styles.css">
+	<script src="socket.io/socket.io.js"></script>
+	<script src="chat.js"></script>
   </head>
   <body>
     <div id="container">
-		<div id="login">
-			<div id="form">
-				<form>
-					<input type="text" name="username" placeholder="Username"><br>
-					<input type="password" name="password" placeholder="Password"><br>
-				</form>
-			</div>
-
+    	<div id="chat">
+    	<div id="content" style="width: 500px; height: 300px; margin: 0 0 20px 0; border: solid 1px #999; overflow-y: scroll;"></div>
+		<div class="controls">
+			<input type="text" style="width:350px;" id="field">
+			<input type="button" value="send" id="send">
+		</div>
 		</div>
 	</div>
   </body>

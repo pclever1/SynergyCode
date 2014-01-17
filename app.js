@@ -50,8 +50,9 @@ var connect = require('connect');
  
 sio.sockets.on('connection', function (socket) {
     console.info('   [info] A socket with sessionID ' + socket.handshake.sessionID + ' connected!');
-    socket.emit('message', {
-        message: 'hello'
+    socket.emit('message', { message: 'welcome to the chat' });
+    socket.on('send', function (data) {
+        sio.sockets.emit('message', data);
     });
     socket.on('fileLoad', function (data) {
         fileName = data.message;

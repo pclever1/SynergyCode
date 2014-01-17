@@ -11,7 +11,8 @@
     "passport": "~0.1.18",
     "ejs": "~0.8.5",
     "express": "~3.4.7",
-    "debug": "*"
+    "debug": "*",
+    "jade": "~1.1.4"
   },
   "devDependencies": {},
   "scripts": {
