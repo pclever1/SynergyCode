@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Create New File</title>
+	<script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
 <form>
@@ -12,7 +13,22 @@
 		<option>.css</option>
 		<option>.js</option>
 	</select><br>
-	<input type="button" value="Create File!" id="send">
+	<input type="button" value="Create File!" id="fileCreateButton">
 </form>
+
+<script>
+	var createFile = document.getElementById("fileCreateButton");
+	var fName = document.getElementById("fileName");
+	var socket = io.connect(location.hostname);
+	createFile.onclick = function(){
+		if(fName.value != ""){
+			var fullName = fName.value + document.getElementById("fileType").value;
+			socket.emit('createFile', {message: fullName});
+		}else{
+			alert("Please enter a file name!");
+		}	
+	}
+</script>>
+
 </body>
 </html>

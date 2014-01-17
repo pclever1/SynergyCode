@@ -74,4 +74,12 @@ sio.sockets.on('connection', function (socket) {
             console.log("THE FILE WAS SAVED");
         });
     });
+    socket.on('createFile', function (data){
+    	fs.writeFile('public/editableFiles/' + data.message, "",function (err) {
+            if (err) {
+                throw err;
+            }
+            console.log("THE FILE WAS Created");
+        });
+    });
 });
