@@ -47,7 +47,7 @@ var server = http.createServer(app).listen(app.get('port'), function () {
 var sio = io.listen(server);
 
 var connect = require('connect');
- 
+
 sio.sockets.on('connection', function (socket) {
     console.info('   [info] A socket with sessionID ' + socket.handshake.sessionID + ' connected!');
     socket.emit('message', { message: 'Welcome to the chat!' });
