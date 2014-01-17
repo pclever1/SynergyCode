@@ -31,7 +31,7 @@
      styleActiveLine: true,
      lineNumbers: true,
      lineWrapping: true,
-     theme: 'monokai'
+     theme: 'ambiance'
  });
  editor.on('change', function (cMirror) {
      var fileData = editor.getValue();
