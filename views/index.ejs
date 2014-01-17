@@ -4,6 +4,7 @@
     <title>"Real time web chat"</title>
     <link rel="stylesheet" href="stylesheets/reset.css">
 	<link rel="stylesheet" href="stylesheets/styles.css">
+	<script type="text/javascript" src="js/jquery.js"></script>
 	<script src="socket.io/socket.io.js"></script>
 	<script src="chat.js"></script>
   </head>
@@ -12,6 +13,7 @@
     	<div id="chat">
     	<div id="content" style="width: 500px; height: 300px; margin: 0 0 20px 0; border: solid 1px #999; overflow-y: scroll;"></div>
 		<div class="controls">
+			<input type="text" style='width:350px;' id="name" placeHolder="Name"><br>
 			<input type="text" style="width:350px;" id="field">
 			<input type="button" value="send" id="send">
 		</div>
