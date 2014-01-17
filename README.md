@@ -7,9 +7,9 @@ A Node.js FTP Alternative designed with collaberation in mind.
 
 
 
-Version 0.0.1 (alpha) is here!
+Version 0.0.2 (alpha) is here!
 
-[Latest Build](https://github.com/CodeBoxJS/CodeBox/releases/tag/v0.0.1)
+[Latest Build](https://github.com/CodeBoxJS/CodeBox/releases/tag/v0.0.2)
 
 ##How to Use
 	node app
