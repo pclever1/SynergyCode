@@ -90,4 +90,27 @@
      });
  });
 
- 
+var chatOpen = false;
+
+ $('#chatPulloutBar').on("click", function(e){
+    if(!chatOpen){
+        $('#chatContainer').animate({
+            "left":"-=20%"
+        }, "slow");
+        $('#chatPulloutBar').animate({
+            "left": "-=20%"
+        },"slow");
+        $('#chatPulloutBar img').attr("src", "images/rightArrow.png");
+        chatOpen = true;
+    }else{
+        $('#chatContainer').animate({
+            "left":"+=20%"
+        }, "slow");
+        $('#chatPulloutBar').animate({
+            "left": "+=20%"
+        },"slow");
+        $('#chatPulloutBar img').attr("src", "images/leftArrow.png");
+        chatOpen = false;
+    }    
+    e.stopPropagation();
+ });
