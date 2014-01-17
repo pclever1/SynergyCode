@@ -7,9 +7,9 @@
 <script type="text/javascript" src="jqueryFileTree/jqueryFileTree.js"></script>
 <link rel="stylesheet" href="stylesheets/filetest.css">
 <link rel="stylesheet" type="text/css" href="stylesheets/codemirror.css">
-<script src="codemirror.js"></script>
-<script src="xml.js"></script>
-<script src="active-line.js"></script>
+<script src="js/codemirror.js"></script>
+<script src="js/xml.js"></script>
+<script src="js/active-line.js"></script>
 
 </head>
 
@@ -35,6 +35,21 @@
     
 </div>
 
+<div id ="chatPulloutBar">
+    <img src="images/leftArrow.png">
+</div>
+
+<div id = "chatContainer">
+<div id="chat">
+    <div id="content"></div>
+    <div class="controls">
+        <input type="text" id="name" placeHolder="Name"><br>
+        <input type="text" id="field">
+        <input type="button" value="send" id="send">
+    </div>
+</div>
+</div>
+
 <table id = "mainTable">
         <tr id = "headerow">
                 <td>Code</td>
@@ -46,54 +61,7 @@
         </tr>
 </table>
 
-<script>
-        var socket = io.connect('http://localhost');
-        var loadedFileName;
-
-        window.onload = function () {
-            socket.on('message', function (data) {
-                alert('Its ready to go!');
-            }); 
-        }
-
-       $(document).ready( function() {
-            $('#filetree').fileTree({ root: 'editableFiles' , script: 'jqueryFileTree/connectors/jqueryFileTree.asp'}, function(file) {
-                alert(file);
-            });
-        });
-
-        function fileLoader(fileName) {
-            loadedFileName = fileName;
-            socket.emit('fileLoad', {
-                message: fileName
-            });
-        }
-
-        function preview(file) {
-            var html = $.parseHTML(file, document, true);
-            $('[name="preview"]').contents().find("html").html(html);
-        }
-
-        socket.on('fileData', function (data) {
-            editor.setValue(data.message);
-            preview(data.message);
-        });
-
-        var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
-            mode: "application/xml",
-            styleActiveLine: true,
-            lineNumbers: true,
-            lineWrapping: true,
-            theme: 'monokai'
-        });
-        editor.on('change',function(cMirror){
-                var fileData = editor.getValue();
-                preview(fileData);
-                socket.emit('fileChanged', {
-                        message: fileData
-                });
-        });
-</script>
+<script src="js/mainCode.js"></script>
 
 </body>
 

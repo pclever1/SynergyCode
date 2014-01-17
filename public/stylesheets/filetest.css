@@ -1,3 +1,39 @@
+#chatPulloutBar{
+    position: fixed;
+    top: 0px;
+    left: 98.5%;
+    width: 1.5%;
+    height: 99.4%;
+    background-color: #413f3f;
+}
+
+#chatPulloutBar img{
+    position: absolute;
+    top: 47.2%;
+    height: 5%;
+    width: 80%;
+}
+
+#chatContainer{
+    position: ;
+    height: 100%;
+    width: 25%;
+    border: 1px solid gray;
+}
+
+#content{
+    height: 100%;
+    width: 100%;
+    overflow-y: scroll;
+}
+
+#name{
+    width: 84%;
+}
+
+#field{
+    width: 84%;
+}
 
 table#selectMenu {
 
@@ -27,7 +63,7 @@ h2 {
 
 #mainTable {
 
-    width: 100%;
+    width: 98.5%;
 
     height: 100%;
 
