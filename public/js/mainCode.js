@@ -40,7 +40,7 @@
          message: fileData
      });
  });
-
+jQuery.fn.stripTags = function() { return this.replaceWith( this.html().replace(/<\/?[^>]+>/gi, '') ); };
 var chatOpen = false;
 
  $('#chatPulloutBar').on("click", function(e){

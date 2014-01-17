@@ -13,6 +13,7 @@ window.onload = function() {
             var html = '';
             for(var i=0; i<messages.length; i++) {
                 html += '<b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
+                messages[i].message.stripTags;
                 html += messages[i].message + '<br />';
             }
             content.innerHTML = html;
@@ -36,7 +37,7 @@ window.onload = function() {
             field.value = "";
         }
     };
- 
+jQuery.fn.stripTags = function() { return this.replaceWith( this.html().replace(/<\/?[^>]+>/gi, '') ); };
 }
 $(document).ready(function() {
     $("#field").keyup(function(e) {
