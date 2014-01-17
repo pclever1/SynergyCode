@@ -17,8 +17,9 @@ window.onload = function() {
                 html += messages[i].message.replace(/(<([^>]+)>)/ig,"") + '<br />';
             }
             content.innerHTML = html;
-            $('#content').scrollTop($('#content')[0].scrollHeight);
+            
             emojify.run(document.getElementById("chat"));
+            $('#content').scrollTop($('#content')[0].scrollHeight);
         } else {
             console.log("There is a problem:", data);
         }
