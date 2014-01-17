@@ -22,8 +22,7 @@
 }
 
 #chatContainer{
-    /*position: fixed;*/
-    position: absolute;
+    position: fixed;
     left: 100%;
     top: 0px;
     height: 91%;
@@ -45,11 +44,11 @@
 }
 
 #name{
-    width: 84%;
+    width: 80%;
 }
 
 #field{
-    width: 84%;
+    width: 80%;
 }
 
 table#selectMenu {
