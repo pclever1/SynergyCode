@@ -11,6 +11,9 @@
 <script src="js/xml.js"></script>
 <script src="js/active-line.js"></script>
 
+<link rel="stylesheet" type="text/css" href="stylesheets/emojify.css">
+<script src="emojify.js"></script>
+
 </head>
 
 <body>
@@ -62,6 +65,18 @@
 
 <script src="js/mainCode.js"></script>
 <script type = "text/javascript" src = "chat.js"></script>
+<script>
+emojify.setConfig({
+    emojify_tag_type: 'img',
+    emoticons_enabled: true,
+    people_enabled: true,
+    nature_enabled: true,
+    objects_enabled: true,
+    places_enabled: true,
+    symbols_enabled: true
+});
+emojify.run(document.getElementById("chat"));
+</script>
 
 </body>
 
