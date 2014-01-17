@@ -34,7 +34,7 @@
 .controls{
     position: relative;
     left: -1px;
-    height: 101%;
+    height: 101%;   
     background-color: #202020;
     border: 1px solid black;
 }
