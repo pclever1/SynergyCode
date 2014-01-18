@@ -17,9 +17,12 @@ yes
 #Enable Voice Chat
 yes
 
+#File types that can be created
+HTML, CSS, JS
+
 
 #Editable file types
-HTML, HTM, CSS
+HTML, HTM, CSS, JS
 
 
 #Uploadable file types
