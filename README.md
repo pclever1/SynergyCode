@@ -1,4 +1,4 @@
-#CodeBox#
+#SynergyCode#
 A Node.js FTP Alternative designed with collaberation in mind.
 
 [Main Website](http://www.thecodebox.org/) - learn about the purpose and goals for CodeBox and meet the team
