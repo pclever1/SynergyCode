@@ -1,15 +1,21 @@
 #SynergyCode#
 A Node.js FTP Alternative designed with collaberation in mind.
 
+##Links
 [Main Website](http://www.thecodebox.org/) - learn about the purpose and goals for CodeBox and meet the team
 
 [Wiki](http://www.wiki.thecodebox.org/) - tutorials, requitements, planning, and more and it is open to anyone to edit
 
 
-
+##Latest Build
 Version 0.0.2 (alpha) is here!
 
-[Latest Build](https://github.com/CodeBoxJS/CodeBox/releases/tag/v0.0.2)
+[View Here](https://github.com/CodeBoxJS/CodeBox/releases/tag/v0.0.2)
+
+
+##Licence
+GNU General Public License
+[View Here](https://github.com/CodeBoxJS/SynergyCode/blob/master/LICENSE)
 
 ##How to Use
 	node app
