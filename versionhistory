@@ -11,7 +11,7 @@ V 0.0.2 (1/17/2014)
 -Efficient save protocols
 -CodeMirror
 -Start website styling
--live preview window of code started
+-Live preview window of code started
 -Create files
 -Chating (text only)
 
@@ -20,24 +20,27 @@ V 0.0.3 (1/24/2014)
 -Configuration file
   -Existing File Structure
   -Users
--display file structure
+-Display file structure
 -Colaboration start
 -Further web styling improvements
--live preview finished
+-Live preview finished
 
 
 V 0.0.4 (1/31/2014)
+-Further web styling improvements
 -User permissions/accounts
 -Admin panel
 
 
 V 0.0.5 (2/7/2014)
--Installer (npm?)
+-Installer (npm)
+-Further web styling improvements
 -Create files
 
 
 V 0.0.6 (2/14/2014)
 -Colaboration finish
+-Styling finished
 
 
 V 0.1 (2/21/2014)
