@@ -2,9 +2,9 @@
 A Node.js FTP Alternative designed with collaberation in mind.
 
 ##Links
-[Main Website](http://) - learn about the purpose and goals for SynergyCode and meet the team
+[Main Website](http://www.synergycode.org/) - learn about the purpose and goals for SynergyCode and meet the team
 
-[Wiki](http://) - tutorials, requitements, planning, and more and it is open to anyone to edit
+[Wiki](http://www.wiki.synergycode.org/) - tutorials, requitements, planning, and more and it is open to anyone to edit
 
 
 ##Latest Build
@@ -20,4 +20,4 @@ GNU General Public License
 ##How to Use
 	node app
 	
-[Wiki Tutorials](http://WIKI-SITE/index.php?title=Tutorials) - everything from start to finish in a matter of minutes.
+[Wiki Tutorials](http://www.wiki.synergycode.org/index.php?title=Tutorials) - everything from start to finish in a matter of minutes.
