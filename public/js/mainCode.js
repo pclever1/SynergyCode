@@ -2,8 +2,8 @@
 
  $(document).ready(function () {
      $('#filetree').fileTree({
-         root: 'editableFiles',    //this line doesn't throw any errors, but it has not been confirmed to work
-         script: 'jqueryFileTree/connectors/jqueryFileTree.asp'  //the site is unable to find or use this resource
+         root: '/editableFiles',    //this line doesn't throw any errors, but it has not been confirmed to work
+         script: '/jqueryFileTree/connectors/jqueryFileTree.js'  //the site is unable to find or use this resource
      }, function (file) {
          alert(file);
      });

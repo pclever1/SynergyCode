@@ -26,7 +26,7 @@ app.use(express.cookieParser('youre being watched'));
 app.use(express.session());
 app.use(app.router);
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/public')));
 
 // development only
 if ('development' == app.get('env')) {
@@ -37,6 +37,8 @@ app.get('/', routes.index);
 app.get('/users/:id', user.list);
 app.get('/filetest', filetest.index);
 
+
+
 var server = http.createServer(app).listen(app.get('port'), function () {
     console.info('Express server listening on port ' + app.get('port'));
 });
@@ -46,7 +48,6 @@ var server = http.createServer(app).listen(app.get('port'), function () {
 
 var sio = io.listen(server);
 
-var connect = require('connect');
 
 sio.sockets.on('connection', function (socket) {
     console.info('   [info] A socket with sessionID ' + socket.handshake.sessionID + ' connected!');
