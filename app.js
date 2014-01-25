@@ -12,6 +12,7 @@ var path = require('path');
 var io = require('socket.io');
 var fs = require('fs');
 var app = express();
+var util = require('util');
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(express.cookieParser('youre being watched'));
+app.use(express.bodyParser());
 app.use(express.session());
 app.use(app.router);
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
@@ -37,6 +39,58 @@ app.get('/', routes.index);
 app.get('/users/:id', user.list);
 app.get('/filetest', filetest.index);
 
+var stringHeader = "<ul class='jqueryFileTree' style='display: none;'>";
+var stringFooter = "</ul>";
+// arguments: path, directory name
+var formatDirectory =
+        "<li class='directory collapsed'><a href='#' rel='%s/'>%s</a><li>";
+// arguments: extension, path, filename
+var formatFile = "<li class='file ext_%s'><a href='#' rel='%s'>%s</a></li>";
+ 
+var createStatCallback = (function(res, path, fileName, isLast){
+        return function(err, stats){
+       
+                          if(stats.isDirectory())
+                            {
+                                res.write(util.format(formatDirectory, path, fileName));
+                            }
+                            else
+                            {
+                                var fileExt = fileName.slice(fileName.lastIndexOf('.')+1);
+       
+                                res.write(util.format(formatFile, fileExt, path, fileName));
+                            }
+ 
+                    if(isLast){
+                        res.end(stringFooter);
+                    }
+                }
+});
+
+
+app.post('/', function(req,res){
+        console.log("POST RECEIVED");
+    // 'text/html'
+        res.writeHead(200, {'content-type': 'text/plain'});
+        res.write(stringHeader);
+ 
+        // get a list of files
+        fs.readdir(__dirname + '/public/editableFiles/', function(err, files){
+       
+                for(var i = 0; i < files.length; i++)
+                {
+                        var fileName = files[i];
+                        var path = util.format('%s%s', __dirname + '/public/editableFiles/', fileName);
+                        var isLast = (i === (files.length-1));
+ 
+ 
+                        var statCallback = createStatCallback(res, path, fileName, isLast);
+ 
+                        fs.stat(path, statCallback);
+            }
+ 
+        });
+});
 
 
 var server = http.createServer(app).listen(app.get('port'), function () {
@@ -56,8 +110,10 @@ sio.sockets.on('connection', function (socket) {
         sio.sockets.emit('message', data);
     });
     socket.on('fileLoad', function (data) {
-        fileName = data.message;
-        fs.readFile(__dirname + '/public/editableFiles/' + data.message, "utf8", function (err, data) {
+        filePath = data.message;
+        fileNameArray = filePath.split(path.sep);
+        fileName = fileNameArray[fileNameArray.length-1];
+        fs.readFile(__dirname + '/public/editableFiles/' + fileName, "utf8", function (err, data) {
             if (err) {
                 throw err;
             }
@@ -67,12 +123,10 @@ sio.sockets.on('connection', function (socket) {
         });
     });
     socket.on('fileChanged', function (data) {
-        console.log('FILE CHANGED ON SERVER SIDE');
         fs.writeFile('public/editableFiles/' + fileName, data.message, function (err) {
             if (err) {
                 throw err;
             }
-            console.log("THE FILE WAS SAVED");
         });
     });
     socket.on('createFile', function (data){
@@ -80,7 +134,7 @@ sio.sockets.on('connection', function (socket) {
             if (err) {
                 throw err;
             }
-            console.log("THE FILE WAS Created");
         });
     });
 });
+

@@ -7,6 +7,7 @@
 <script type="text/javascript" src="jqueryFileTree/jqueryFileTree.js"></script>
 <link rel="stylesheet" href="stylesheets/filetest.css">
 <link rel="stylesheet" type="text/css" href="stylesheets/codemirror.css">
+<link rel="stylesheet" type="text/css" href="jqueryFileTree/jqueryFileTree.css">
 <script src="js/codemirror.js"></script>
 <script src="js/xml.js"></script>
 <script src="js/active-line.js"></script>
@@ -19,23 +20,13 @@
 <body>
 
 <h1>Welcome to SynergyCode!</h1>
-<a href = "create.html">Create File</a>
-<br/>
-<table id = "selectMenu">
-<tr>
-        <td><h2>Your File's</h2></td>
-</tr>
-<tr>
-        <td class = "selector" onClick = "fileLoader('testFile1.html')">File1</td>
-</tr>
-<tr>
-        <td class = "selector" onClick = "fileLoader('testFile2.html')">File2</td>
-</tr>
-</table>
 
+<h2 id = "fileMenuTitle">File Menu</h2>
 <div id = "filetree">
     
 </div>
+
+<a href = "create.html">Create File</a>
 
 <div id ="chatPulloutBar">
     <img src="images/leftArrow.png">

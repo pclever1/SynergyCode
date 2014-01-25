@@ -54,23 +54,11 @@
     width: 80%;
 }
 
-table#selectMenu {
 
-    border: 1px solid black;
+#fileMenuTitle {
 
-    font-size: 18px;
-
-    text-align: center;
-
-}
-
-h2 {
-
-    text-decoration: underline;
-
-    padding-left: 20px;
-
-    padding-right: 20px;
+    padding-bottom: 4px;
+    margin: 0px;
 
 }
 

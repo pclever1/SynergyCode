@@ -9,7 +9,8 @@
 var express = require('express'),
         util = require('util'),
         fs = require('fs'),
-        app = express();
+        app = express(),
+        path = require('path');
  
  
 var stringHeader = "<ul class='jqueryFileTree' style='display: none;'>";
@@ -49,7 +50,7 @@ app.post('/', function(req, res){
         res.write(stringHeader);
  
         // get a list of files
-        fs.readdir(req.body.dir, function(err, files){
+        fs.readdir('/editableFiles', function(err, files){
        
                 for(var i = 0; i < files.length; i++)
                 {
@@ -64,4 +65,6 @@ app.post('/', function(req, res){
                 }
  
         });
-};)
+});
+
+app.listen(3000);

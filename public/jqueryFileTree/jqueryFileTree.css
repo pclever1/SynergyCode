@@ -4,6 +4,9 @@ UL.jqueryFileTree {
 	line-height: 18px;
 	padding: 0px;
 	margin: 0px;
+	margin-bottom: 15px;
+	border: 1px solid black;
+	width: 14%;
 }
 
 UL.jqueryFileTree LI {
