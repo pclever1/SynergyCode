@@ -1,8 +1,8 @@
 #chatPulloutBar{
     position: fixed;
     top: 0px;
-    left: 98.5%;
-    width: 1.5%;
+    left: 98.7%;
+    width: 1.3%;
     height: 100%;
     background-color: #202020;
 }
@@ -31,10 +31,10 @@
     background-color: #202020;
 }
 
-.controls{
+.controls{  
     position: relative;
+    height: 101%;
     left: -1px;
-    height: 101%;   
     background-color: #202020;
     border: 1px solid black;
 }
@@ -46,11 +46,11 @@
     color: white;
 }
 
-#name{
+#field{
     width: 80%;
 }
 
-#field{
+#name{
     width: 80%;
 }
 
@@ -70,7 +70,11 @@
 
 #mainTable {
 
-    width: 98.5%;
+    position: relative;
+
+    left: 2%;
+
+    width: 96%;
 
     height: 100%;
 
@@ -91,6 +95,7 @@
     width: 50%;
 
 }
+
 
 [name=preview] {
 
