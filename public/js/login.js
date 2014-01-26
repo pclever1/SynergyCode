@@ -24,4 +24,8 @@ window.onload = function(){
    	socket.on('readyToRedirect', function(){
    		window.location.href = "/filetest";
    	});
+
+   	socket.on('incorrectCreds', function(){
+   		alert("Either your username or password is incorrect.");
+   	});
 }   	

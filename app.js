@@ -37,7 +37,13 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/users/:id', user.list);
-app.get('/filetest', filetest.index);
+app.get('/filetest',function(req, res){
+    if(redirect){
+        res.render('filetest', { title: 'SynergyCode' });
+    }else{
+        res.render('index', {title: 'SynergyCode'});
+    }    
+});
 
 var stringHeader = "<ul class='jqueryFileTree' style='display: none;'>";
 var stringFooter = "</ul>";
@@ -103,7 +109,6 @@ fs.readFile(__dirname + "/logindata.txt", "utf8", function(err,data){
 });
 
 var sio = io.listen(server);
-var userTrue = false;
 var redirect = false;
 
 
@@ -118,20 +123,20 @@ sio.sockets.on('connection', function (socket) {
         var creds = data.message.split(",");
         var user = creds[0];
         var pass = creds[1];
-        for(var i = 0; i < credentials.length; i++){
-            if(i%2==0){
-                if(user == credentials[i]){
-                    userTrue = true;
-                }
-            }else{
-                if(pass == credentials[i]){
-                }
-                if(pass == credentials[i] && userTrue){
-                    redirect = true;
-                }
+        for(var i = 0; i < credentials.length-1; i++){
+            if(user == credentials[i] && pass == credentials[i]){
+                redirect = true;
             }
         }
-        socket.emit('readyToRedirect');
+        if(redirect){
+            socket.emit('readyToRedirect');
+        }else{
+            socket.emit('incorrectCreds');
+        }    
+    });
+
+    socket.on('logout', function(){
+        redirect = false;
     });
 
     socket.on('fileLoad', function (data) {

@@ -9,6 +9,10 @@
      });
  });
 
+ $('#logout').on('click',function(){
+    socket.emit('logout');
+ });
+
  function fileLoader(filePath) {
      socket.emit('fileLoad', {
          message: filePath
