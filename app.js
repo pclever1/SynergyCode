@@ -69,7 +69,6 @@ var createStatCallback = (function(res, path, fileName, isLast){
 
 
 app.post('/', function(req,res){
-        console.log("POST RECEIVED");
     // 'text/html'
         res.writeHead(200, {'content-type': 'text/plain'});
         res.write(stringHeader);
@@ -98,9 +97,14 @@ var server = http.createServer(app).listen(app.get('port'), function () {
 });
 
 
-
+var credentials;
+fs.readFile(__dirname + "/logindata.txt", "utf8", function(err,data){
+    credentials = data.split(",");
+});
 
 var sio = io.listen(server);
+var userTrue = false;
+var redirect = false;
 
 
 sio.sockets.on('connection', function (socket) {
@@ -109,6 +113,27 @@ sio.sockets.on('connection', function (socket) {
     socket.on('send', function (data) {
         sio.sockets.emit('message', data);
     });
+
+    socket.on('login', function(data){
+        var creds = data.message.split(",");
+        var user = creds[0];
+        var pass = creds[1];
+        for(var i = 0; i < credentials.length; i++){
+            if(i%2==0){
+                if(user == credentials[i]){
+                    userTrue = true;
+                }
+            }else{
+                if(pass == credentials[i]){
+                }
+                if(pass == credentials[i] && userTrue){
+                    redirect = true;
+                }
+            }
+        }
+        socket.emit('readyToRedirect');
+    });
+
     socket.on('fileLoad', function (data) {
         filePath = data.message;
         fileNameArray = filePath.split(path.sep);
