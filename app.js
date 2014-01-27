@@ -141,10 +141,12 @@ sio.sockets.on('connection', function (socket) {
 
     socket.on('fileLoad', function (data) {
         filePath = data.message;
-        fileNameArray = filePath.split(path.sep);
+        fileNameArray = filePath.split("/");
         fileName = fileNameArray[fileNameArray.length-1];
+        console.log(fileName);
         fs.readFile(__dirname + '/public/editableFiles/' + fileName, "utf8", function (err, data) {
             if (err) {
+                console.log(err);
                 throw err;
             }
             socket.emit('fileData', {
