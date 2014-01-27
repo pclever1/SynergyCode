@@ -10,7 +10,7 @@ A Node.js FTP Alternative designed with collaberation in mind.
 ##Latest Build
 Version 0.0.2 (alpha) is here!
 
-[View Here](https://github.com/CodeBoxJS/SynergyCode/releases/tag/v0.0.2)
+[View Here](https://github.com/CodeBoxJS/SynergyCode/releases/tag/v0.0.2) ([Description](http://www.synergycode.org/weekly-updates/))
 
 
 ##Licence
