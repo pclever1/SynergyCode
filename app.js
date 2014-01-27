@@ -13,6 +13,8 @@ var io = require('socket.io');
 var fs = require('fs');
 var app = express();
 var util = require('util');
+var connect = require('connect');
+var cookie = require('cookie');
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -23,7 +25,7 @@ app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
-app.use(express.cookieParser('youre being watched'));
+app.use(express.cookieParser());
 app.use(express.bodyParser());
 app.use(express.session({secret: 'secret', key: 'express.sid'}));
 app.use(app.router);
@@ -170,3 +172,21 @@ sio.sockets.on('connection', function (socket) {
     });
 });
 
+sio.set('authorization', function (handshakeData, accept) {
+
+  if (handshakeData.headers.cookie) {
+
+    handshakeData.cookie = cookie.parse(handshakeData.headers.cookie);
+
+    handshakeData.sessionID = connect.utils.parseSignedCookie(handshakeData.cookie['express.sid'], 'secret');
+
+    if (handshakeData.cookie['express.sid'] == handshakeData.sessionID) {
+      return accept('Cookie is invalid.', false);
+    }
+
+  } else {
+    return accept('No cookie transmitted.', false);
+  } 
+
+  accept(null, true);
+});

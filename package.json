@@ -4,15 +4,15 @@
   "description": "A FTP alternative",
   "main": "app.js",
   "dependencies": {
-    "connect": "~2.12.0",
     "socket.io": "~0.9.16",
     "stylus": "~0.41.3",
-    "cookie": "~0.1.0",
     "passport": "~0.1.18",
     "ejs": "~0.8.5",
     "express": "~3.4.7",
     "debug": "*",
-    "jade": "~1.1.4"
+    "jade": "~1.1.4",
+    "cookie": "~0.1.0",
+    "connect": "~2.12.0"
   },
   "devDependencies": {},
   "scripts": {
