@@ -12,7 +12,6 @@ Version 0.0.3 (alpha) is here!
 
 [View Here](https://github.com/CodeBoxJS/SynergyCode/releases/tag/v0.0.3)
 
-
 ##Licence
 GNU General Public License
 [View Here](https://github.com/CodeBoxJS/SynergyCode/blob/master/LICENSE)
