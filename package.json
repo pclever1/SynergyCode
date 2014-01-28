@@ -1,7 +1,7 @@
 {
   "name": "SynergyCode",
   "version": "0.0.3",
-  "description": "A FTP alternative",
+  "description": "An FTP alternative",
   "main": "app.js",
   "dependencies": {
     "socket.io": "~0.9.16",

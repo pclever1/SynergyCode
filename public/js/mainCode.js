@@ -4,7 +4,7 @@ socket.on('error', function (reason) {
     console.error('Unable to connect Socket.IO', reason);
 });
 
-socket.on('connect', function () {
+socket.on('connect', function (data) {
     console.info('successfully established a working and authorized connection');
 });
 

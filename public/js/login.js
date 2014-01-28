@@ -1,6 +1,14 @@
-window.onload = function(){
+//Authorization
+var socket = io.connect(location.hostname);
+socket.on('error', function (reason) {
+    console.error('Unable to connect Socket.IO', reason);
+});
 
-	var socket = io.connect(location.hostname);
+socket.on('connect', function (data) {
+    console.info('successfully established a working and authorized connection');
+});
+
+window.onload = function(){
 	var user = document.getElementById("user");
     var submit = document.getElementById("sub");
     var pass = document.getElementById("pass");
