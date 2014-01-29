@@ -19,9 +19,9 @@ $(document).ready(function () {
 });
 
 //logout button
-$('#logout').on('click', function () {
-    socket.emit('logout');
-});
+// $('#logout').on('click', function () {
+//     socket.emit('logout');
+// });
 
 
 
