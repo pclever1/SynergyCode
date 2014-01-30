@@ -14,6 +14,24 @@ var app = express();
 var util = require('util');
 var connect = require('connect');
 var cookie = require('cookie');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var users = require('./public/js/users.js');
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var UserSchema = new Schema({
+    username: String,
+    password: String
+});
+var User = mongoose.model('User', UserSchema);
+mongoose.connect('mongodb://localhost/test');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function callback () {
+  console.log('yay db connection');    
+});
+var flash = require('connect-flash');
+
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -30,6 +48,9 @@ app.use(express.session({
     secret: 'secret',
     key: 'express.sid'
 }));
+ app.use(passport.initialize());
+  app.use(passport.session());
+app.use(flash());
 app.use(app.router);
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, '/public')));
@@ -96,10 +117,40 @@ app.post('/', function (req, res) {
     });
 });
 
+app.post('/login',
+    passport.authenticate('local', {
+        successRedirect: '/filetest',
+        failureRedirect: '/',
+        failureFlash: true
+    })
+);
+
 
 var server = http.createServer(app).listen(app.get('port'), function () {
     console.info('Express server listening on port ' + app.get('port'));
 });
+
+passport.use(new LocalStrategy(function(username, password, done){
+    User.findOne({'username':username}, function(err, user){
+        if(err){
+            console.log('dead at first if');
+            return done(err);
+        }
+        if(!user){
+            console.log('dead at incorrect user');
+            console.log(user);
+            return done(null, false, {message: 'Incorrect username.'});
+        }
+        if(!user.validPassword(password)){
+            console.log('dead at incorrect pass');
+            return done(null, false, {message: 'Incorrect password.'});
+        }
+        console.log('got to end, successful, should redirect');
+        return done(null,user);
+    });
+}));
+
+
 
 var sio = io.listen(server);
 

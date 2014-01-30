@@ -22,15 +22,14 @@
 	<h1 id = "mainHeader">Welcome to Synergy Code!</h1>
 	<div id = "login">
 	<h3>Please log in below</h3>
-		<form>
-			<input type = "text" id = "user" placeHolder = "Username">
+		<form action = "/login" method = "post">
+			<input type = "text" name = "username" placeHolder = "Username">
 			<br/>
-			<input type = "password" id = "pass" placeHolder = "Password">
+			<input type = "password" name = "password" placeHolder = "Password">
 			<br/>
-			<input type = "submit" value = "submit" id = "sub">
+			<input type = "submit" value = "Log In!">
 		</form>
 		<h3>Don't have an account? Create one <a href="createUser.html">here</a></h3>
 	</div>
-	<!-- <script type="text/javascript" src = "js/login.js"></script>-->
   </body>
 </html>
