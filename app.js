@@ -33,27 +33,6 @@ app.use(express.session({
 app.use(app.router);
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, '/public')));
-var authentication = app.use(express.basicAuth(function(user, pass){
-    if(checkUser(user) && checkPass(pass)){
-        return true;
-    }
-}));
-
-function checkUser(user){
-    for(var i = 0; i <users.length; i++){
-        if(user == users[i]){
-            return true;
-        }
-    }
-}
-
-function checkPass(pass){
-    for (var i = 0; i<passwords.length; i++){
-        if(pass == passwords[i]){
-            return true;
-        }
-    }
-}
 
 // development only
 if ('development' == app.get('env')) {
@@ -63,23 +42,8 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/users/:id', user.list);
-app.get('/filetest', authentication , function(req, res){
-    console.log("USER IS " + req.user);
-    res.render('filetest.ejs');  
-});
-
-var credentials;
-var users = [];
-var passwords = [];
-fs.readFile(__dirname + "/logindata.txt", "utf8", function(err,data){
-    credentials = data.split(",");
-    for(var i = 0; i < credentials.length; i++){
-        if(i%2 == 0){
-            users.push(credentials[i]);
-        }else{
-            passwords.push(credentials[i]);
-        }
-    }
+app.get('/filetest', function(req, res){
+    res.render('filetest.ejs', {title: 'Synergy Code'});  
 });
 
 var stringHeader = "<ul class='jqueryFileTree' style='display: none;'>";
@@ -137,15 +101,6 @@ var server = http.createServer(app).listen(app.get('port'), function () {
     console.info('Express server listening on port ' + app.get('port'));
 });
 
-
-<<<<<<< HEAD
-=======
-var credentials;
-fs.readFile(__dirname + "/logindata.txt", "utf8", function (err, data) {
-    credentials = data.split(",");
-});
-
->>>>>>> 9fab14a572df38f0cc4690e7c4cf73d57b979bb0
 var sio = io.listen(server);
 
 sio.sockets.on('connection', function (socket) {
@@ -155,48 +110,6 @@ sio.sockets.on('connection', function (socket) {
     socket.on('send', function (data) {
         sio.sockets.emit('message', data);
     });
-
-
-    // socket.on('login', function(data){
-    //     var creds = data.message.split(",");
-    //     var user = creds[0];
-    //     var pass = creds[1];
-    //     for(var i = 0; i < credentials.length-1; i++){
-    //         if(user == credentials[i] && pass == credentials[i]){
-    //             redirect = true;
-    //         }
-    //     }
-    //     if(redirect){
-    //         socket.emit('readyToRedirect');
-    //     }else{
-    //         socket.emit('incorrectCreds');
-    //     }    
-    // });
-
-    // socket.on('logout', function(){
-    //     redirect = false;
-    // });
-
-    socket.on('login', function (data) {
-        var creds = data.message.split(",");
-        var user = creds[0];
-        var pass = creds[1];
-        for (var i = 0; i < credentials.length - 1; i++) {
-            if (user == credentials[i] && pass == credentials[i]) {
-                redirect = true;
-            }
-        }
-        if (redirect) {
-            socket.emit('readyToRedirect');
-        } else {
-            socket.emit('incorrectCreds');
-        }
-    });
-
-    socket.on('logout', function () {
-        redirect = false;
-    });
-
 
     socket.on('fileLoad', function (data) {
         filePath = data.message;
