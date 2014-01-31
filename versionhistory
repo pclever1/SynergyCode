@@ -16,17 +16,16 @@ V 0.0.2 (1/17/2014)
 -Chating (text only)
 
 
-V 0.0.3 (1/24/2014)
--Configuration file
-  -Existing File Structure
-  -Users
+V 0.0.3 (1/27/2014)
 -Display file structure
 -Colaboration start
--Further web styling improvements
--Live preview finished
 
 
 V 0.0.4 (1/31/2014)
+-Configuration file
+  -Existing File Structure
+  -Users
+-Live preview finished
 -Further web styling improvements
 -User permissions/accounts
 -Admin panel
