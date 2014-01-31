@@ -16,15 +16,21 @@ var connect = require('connect');
 var cookie = require('cookie');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var users = require('./public/js/users.js');
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var UserSchema = new Schema({
     username: String,
     password: String
 });
+
+UserSchema.methods.validPassword = function(pass){
+    if(pass == this.password){
+        return true;
+    }
+    return false;
+}
 var User = mongoose.model('User', UserSchema);
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect('mongodb://localhost/mydb');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {
@@ -60,12 +66,26 @@ if ('development' == app.get('env')) {
     app.use(express.errorHandler());
 }
 
+var requiresLogin = function(req, res, next){
+    if(!req.isAuthenticated()){
+        return res.send(400);
+    }
+    next();
+}
+
+var signout = function(req, res){
+    req.logout();
+    res.redirect('/');  
+}
 
 app.get('/', routes.index);
 app.get('/users/:id', user.list);
-app.get('/filetest', function(req, res){
+app.get('/filetest', requiresLogin,function(req, res){
     res.render('filetest.ejs', {title: 'Synergy Code'});  
 });
+app.get('/logout', signout);
+
+
 
 var stringHeader = "<ul class='jqueryFileTree' style='display: none;'>";
 var stringFooter = "</ul>";
@@ -131,7 +151,7 @@ var server = http.createServer(app).listen(app.get('port'), function () {
 });
 
 passport.use(new LocalStrategy(function(username, password, done){
-    User.findOne({'username':username}, function(err, user){
+    User.findOne({username:username}, function(err, user){
         if(err){
             console.log('dead at first if');
             return done(err);
@@ -150,7 +170,15 @@ passport.use(new LocalStrategy(function(username, password, done){
     });
 }));
 
+passport.serializeUser(function(user,done){
+    done(null, user.id);
+});
 
+passport.deserializeUser(function(id,done){
+    User.findById(id, function(err,user){
+        done(err,user);
+    });
+});
 
 var sio = io.listen(server);
 
