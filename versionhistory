@@ -20,13 +20,13 @@ V 0.0.3 (1/27/2014)
 -Display file structure
 -Colaboration start
 -Login functionality
+-Live preview finished
 
 
 V 0.0.4 (1/31/2014)
 -Configuration file
   -Existing File Structure
   -Users
--Live preview finished
 -Further web styling improvements
 -User permissions/accounts
 -Admin panel
