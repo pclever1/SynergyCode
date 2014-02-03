@@ -21,6 +21,7 @@ V 0.0.3 (1/27/2014)
 -Colaboration start
 -Login functionality
 -Live preview finished
+-Create files
 
 
 V 0.0.4 (1/31/2014)
@@ -28,14 +29,14 @@ V 0.0.4 (1/31/2014)
   -Existing File Structure
   -Users
 -Further web styling improvements
--User permissions/accounts
--Admin panel
+-User accounts
 
 
 V 0.0.5 (2/7/2014)
 -Installer (npm)
 -Further web styling improvements
--Create files
+-Admin panel
+-User Permissions
 
 
 V 0.0.6 (2/14/2014)

@@ -20,7 +20,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var UserSchema = new Schema({
     username: String,
-    password: String
+    password: String,
+    account_level: String
 });
 
 UserSchema.methods.validPassword = function(pass){
@@ -84,7 +85,9 @@ app.get('/filetest', requiresLogin,function(req, res){
     res.render('filetest.ejs', {title: 'Synergy Code'});  
 });
 app.get('/logout', signout);
-
+app.get('/create', requiresLogin, function(req,res){
+    res.render('createFile.ejs');
+});
 
 
 var stringHeader = "<ul class='jqueryFileTree' style='display: none;'>";
