@@ -80,7 +80,6 @@ var signout = function(req, res){
 }
 
 app.get('/', routes.index);
-app.get('/users/:id', user.list);
 app.get('/filetest', requiresLogin,function(req, res){
     res.render('filetest.ejs', {title: 'Synergy Code'});  
 });
