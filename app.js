@@ -4,8 +4,6 @@
 
 var express = require('express');
 var routes = require('./routes');
-var user = require('./routes/user');
-var filetest = require('./routes/filetest');
 var http = require('http');
 var path = require('path');
 var io = require('socket.io');
@@ -80,7 +78,6 @@ var signout = function(req, res){
 }
 
 app.get('/', routes.index);
-app.get('/users/:id', user.list);
 app.get('/filetest', requiresLogin,function(req, res){
     res.render('filetest.ejs', {title: 'Synergy Code'});  
 });
