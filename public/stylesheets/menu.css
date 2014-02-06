@@ -1,0 +1,89 @@
+#main-content {
+	margin-top: 65px;
+	background-color: grey;
+	width:100%;
+	padding: 0px;
+}
+nav ul ul {
+	display: none;
+}
+nav a {
+	text-decoration: none;
+	display: block;
+	color: black;
+}
+nav ul li:hover > ul {
+	display: block;
+}
+nav ul {
+	margin: 0;
+	padding: 0;
+	background: white;
+	list-style: none;
+	text-transform: none;
+	font-weight: 300;
+	line-height: 60px;
+	padding: 0 0px;
+	list-style: none;
+	position: relative;
+	display: inline-table;
+}
+nav ul:after {
+	content: ""; clear: both; display: block;
+}
+#ul-menu {
+	width: 100%;
+}
+nav {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 60px;
+	font-size: 16px;
+	border-bottom: solid grey 5px;
+	z-index: 100000;
+}
+nav ul li {
+	float: left;
+
+}
+#menu{
+	text-align: center;
+	width: 100px;
+	border-right: solid 1px grey;
+}
+#list {
+	width: 101px;
+	margin-left: -1px;
+	border: solid 1px grey;
+}
+nav ul li:hover {
+	background: grey;
+}
+
+nav ul ul {
+	background: white; 
+	padding: 0;
+	position: absolute;
+	top: 100%;
+}
+nav ul ul li {
+	float: none; 
+	position: relative;
+}
+nav ul ul li a:hover {
+	background: grey;
+}
+#logo {
+	width: 60px;
+	height: 60px;
+	border-right: solid 1px grey;
+}
+#user {
+	float: right;
+	width: 100px;
+	text-align: center;
+	border-left: solid 1px grey;
+
+}
