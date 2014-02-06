@@ -1,46 +1,24 @@
 /**
  * Module dependencies.
- */
+ **/
+var express = require('express'),
+    io = require('socket.io'),
+    connect = require('connect'),
+    pageRouter = require('./routes/pageRouter'),
+    http = require('http'),
+    fs = require('fs'),
+    util = require('util'),
+    cookie = require('cookie'),
+    passport = require('passport'),
+    path = require('path'),
+    mongoose = require('mongoose'),
+    flash = require('connect-flash'),
+    app = express();
 
-var express = require('express');
-var routes = require('./routes');
-var http = require('http');
-var path = require('path');
-var io = require('socket.io');
-var fs = require('fs');
-var app = express();
-var util = require('util');
-var connect = require('connect');
-var cookie = require('cookie');
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var UserSchema = new Schema({
-    username: String,
-    password: String,
-    account_level: String
-});
-
-UserSchema.methods.validPassword = function(pass){
-    if(pass == this.password){
-        return true;
-    }
-    return false;
-}
-var User = mongoose.model('User', UserSchema);
-mongoose.connect('mongodb://localhost/mydb');
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function callback () {
-  console.log('yay db connection');    
-});
-var flash = require('connect-flash');
-
-
-// all environments
-app.set('port', process.env.PORT || 3000);
-app.set('views', path.join(__dirname, 'views'));
+/**
+* some middleware setup
+**/
+app.set('port', process.env.PORT || 3000);       //sets port variable according to PORT global variable; default port=3000
 app.set('view engine', 'ejs');
 app.use(express.favicon());
 app.use(express.logger('dev'));
@@ -53,18 +31,48 @@ app.use(express.session({
     secret: 'secret',
     key: 'express.sid'
 }));
- app.use(passport.initialize());
-  app.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(flash());
 app.use(app.router);
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, '/public')));
 
-// development only
-if ('development' == app.get('env')) {
-    app.use(express.errorHandler());
+/**
+* Strategy and Schema declaration for database access
+**/
+var LocalStrategy = require('passport-local').Strategy,
+    Schema = mongoose.Schema,
+    UserSchema = new Schema({
+        username: String,
+        password: String,
+        account_level: String
+    });
+
+/**
+* validPassword method that checks if the entered password matches the entered username
+**/
+UserSchema.methods.validPassword = function(pass){
+    if(pass == this.password){
+        return true;
+    }
+    return false;
 }
 
+/**
+* sets up User variable that utilizes UserSchema and sets up database connection
+**/
+var User = mongoose.model('User', UserSchema);
+mongoose.connect('mongodb://localhost/mydb');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function callback () {
+  console.log('Connection successful.');    
+});
+
+/**
+* requiresLogin - allows for authentication to take place in a GET request before certain pages are accessed
+**/
 var requiresLogin = function(req, res, next){
     if(!req.isAuthenticated()){
         return res.send(400);
@@ -72,21 +80,74 @@ var requiresLogin = function(req, res, next){
     next();
 }
 
+/**
+* sets up passport's strategy for verfying logins
+**/
+passport.use(new LocalStrategy(function(username, password, done){
+    User.findOne({username:username}, function(err, user){
+        if(err){
+            return done(err);
+        }
+        if(!user){
+            return done(null, false, {message: 'Incorrect username.'});
+        }
+        if(!user.validPassword(password)){
+            return done(null, false, {message: 'Incorrect password.'});
+        }
+        return done(null,user);
+    });
+}));
+
+/**
+* the following methods serialize and deserialize the user on login and logout
+**/
+passport.serializeUser(function(user,done){
+    done(null, user.id);
+});
+
+passport.deserializeUser(function(id,done){
+    User.findById(id, function(err,user){
+        done(err,user);
+    });
+});
+
+/**
+* signout - logs out the user
+**/
 var signout = function(req, res){
     req.logout();
     res.redirect('/');  
 }
 
-app.get('/', routes.index);
-app.get('/filetest', requiresLogin,function(req, res){
-    res.render('filetest.ejs', {title: 'Synergy Code'});  
+/**
+* creates the server
+**/
+var server = http.createServer(app).listen(app.get('port'), function () {
+    console.info('Express server listening on port ' + app.get('port'));
 });
+
+/**
+* handlers for the server's GET requests
+**/
+app.get('/', pageRouter.index);
+app.get('/filetest', requiresLogin, pageRouter.filetest);
 app.get('/logout', signout);
-app.get('/create', requiresLogin, function(req,res){
-    res.render('createFile.ejs');
-});
+app.get('/create', requiresLogin, pageRouter.create);
 
+/**
+* handles server's login requests
+**/
+app.post('/login',
+    passport.authenticate('local', {
+        successRedirect: '/filetest',
+        failureRedirect: '/',
+        failureFlash: true
+    })
+);
 
+/**
+* compiles a list of files in editable files directory
+**/
 var stringHeader = "<ul class='jqueryFileTree' style='display: none;'>";
 var stringFooter = "</ul>";
 // arguments: path, directory name
@@ -112,8 +173,10 @@ var createStatCallback = (function (res, path, fileName, isLast) {
     }
 });
 
-
-app.post('/', function (req, res) {
+/**
+* passes the compiled list of files to file tree on front end
+**/
+app.post('/loadFileTree', function (req, res) {
     // 'text/html'
     res.writeHead(200, {
         'content-type': 'text/plain'
@@ -134,49 +197,6 @@ app.post('/', function (req, res) {
             fs.stat(path, statCallback);
         }
 
-    });
-});
-
-app.post('/login',
-    passport.authenticate('local', {
-        successRedirect: '/filetest',
-        failureRedirect: '/',
-        failureFlash: true
-    })
-);
-
-
-var server = http.createServer(app).listen(app.get('port'), function () {
-    console.info('Express server listening on port ' + app.get('port'));
-});
-
-passport.use(new LocalStrategy(function(username, password, done){
-    User.findOne({username:username}, function(err, user){
-        if(err){
-            console.log('dead at first if');
-            return done(err);
-        }
-        if(!user){
-            console.log('dead at incorrect user');
-            console.log(user);
-            return done(null, false, {message: 'Incorrect username.'});
-        }
-        if(!user.validPassword(password)){
-            console.log('dead at incorrect pass');
-            return done(null, false, {message: 'Incorrect password.'});
-        }
-        console.log('got to end, successful, should redirect');
-        return done(null,user);
-    });
-}));
-
-passport.serializeUser(function(user,done){
-    done(null, user.id);
-});
-
-passport.deserializeUser(function(id,done){
-    User.findById(id, function(err,user){
-        done(err,user);
     });
 });
 

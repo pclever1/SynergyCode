@@ -11,8 +11,8 @@ socket.on('connect', function (data) {
 //filetree structure
 $(document).ready(function () {
     $('#filetree').fileTree({
-        root: '/editableFiles', //this line doesn't throw any errors, but it has not been confirmed to work
-        script: '/' //the site is unable to find or use this resource
+        root: '/editableFiles', 
+        script: '/loadFileTree' 
     }, function (file) {
         fileLoader(file);
     });
