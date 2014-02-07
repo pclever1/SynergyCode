@@ -1,64 +1,94 @@
 <html>
 
 <head>
-<title><%= title %></title>
-<script src="/socket.io/socket.io.js"></script>
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="jqueryFileTree/jqueryFileTree.js"></script>
-<link rel="stylesheet" href="stylesheets/filetest.css">
-<link rel="stylesheet" type="text/css" href="stylesheets/codemirror.css">
-<link rel="stylesheet" type="text/css" href="jqueryFileTree/jqueryFileTree.css">
-<script src="js/codemirror.js"></script>
-<script src="js/xml.js"></script>
-<script src="js/active-line.js"></script>
+    <title><%= title %></title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="jqueryFileTree/jqueryFileTree.js"></script>
+    <link rel="stylesheet" href="stylesheets/filetest.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/codemirror.css">
+    <link rel="stylesheet" type="text/css" href="jqueryFileTree/jqueryFileTree.css">
+    <link rel="stylesheet" href="stylesheets/menu.css">
+    <script src="js/codemirror.js"></script>
+    <script src="js/xml.js"></script>
+    <script src="js/active-line.js"></script>
 
-<link rel="stylesheet" type="text/css" href="stylesheets/emojify.css">
-<script src="emojify.js"></script>
+    <link rel="stylesheet" type="text/css" href="stylesheets/emojify.css">
+    <script src="emojify.js"></script>
 
 </head>
 
 <body>
 
-<center><h1>Welcome to SynergyCode!</h1></center>
-<a href="/logout">Logout</a>
-<h2 id = "fileMenuTitle">File Menu</h2>
-<div id = "filetree">
-    
-</div>
+    <nav>
+        <ul id="ul-menu">
+            <li id="logo"><a href="/"><img id="logo" src="img/logo.png" alt=""></a></li>
+            <li id="menu"><a href="">File</a>
+                <ul>
+                    <li id="list"><a href="/create">New</a></li>
+                    <li id="list"><a href="">Upload</a></li>
+                    <li id="list"><a href="">Publish</a></li>
+                    <li id="list"><a href="">Close</a></li>
+                </ul>
+            </li>
+            <li id="menu"><a href="">Edit</a>
+                <ul>
+                    <li id="list"><a href="">Copy</a></li>
+                    <li id="list"><a href="">Cut</a></li>
+                    <li id="list"><a href="">Paste</a></li>
+                </ul>
+            </li>
+            <li id="menu"><a href=""></a>
+                <ul>
+                </ul>
+            </li>
+            <li id="menu"><a href="">Help</a></li>
+            <li id="user"><a href="">User</a>
+                <ul>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div id="main-content">
+        <h2 id = "fileMenuTitle">File Menu</h2>
+        <div id = "filetree">
 
-<a href = "/create">Create File</a>
+        </div>
 
-<table id = "mainTable">
-        <tr id = "headerow">
+        <a href = "/create">Create File</a>
+
+        <table id = "mainTable">
+            <tr id = "headerow">
                 <td><h3>Code Editor</h3></td>
                 <td><h3>Live Preview</h3></td>
-        </tr>
-        <tr>
+            </tr>
+            <tr>
                 <td><textarea id = "editor" rows = "20"></textarea></td>
                 <td><iframe name = "preview"></iframe></td>
-        </tr>
-</table>
+            </tr>
+        </table>
 
-<div id ="chatPulloutBar">
-    <img src="images/leftArrow.png">
-</div>
+        <div id ="chatPulloutBar">
+            <img src="images/leftArrow.png">
+        </div>
 
-<div id = "chatContainer">
-<div id="chat">
-    <div id="content"></div>
-    <div class="controls">
-        <input type="text" id="name" placeHolder="Name"><br>
-        <input type="text" id="field">
-        <input type="button" value="send" id="send">
+        <div id = "chatContainer">
+            <div id="chat">
+                <div id="content"></div>
+                <div class="controls">
+                    <input type="text" id="name" placeHolder="Name"><br>
+                    <input type="text" id="field">
+                    <input type="button" value="send" id="send">
+                </div>
+            </div>
+        </div>
+
+        <script src="js/mainCode.js"></script>
+        <script type = "text/javascript" src = "chat.js"></script>
+        <script>
+        </script>
     </div>
-</div>
-</div>
-
-<script src="js/mainCode.js"></script>
-<script type = "text/javascript" src = "chat.js"></script>
-<script>
-</script>
-
 </body>
 
 </html>
