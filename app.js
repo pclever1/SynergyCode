@@ -63,11 +63,11 @@ UserSchema.methods.validPassword = function(pass){
 * sets up User variable that utilizes UserSchema and sets up database connection
 **/
 var User = mongoose.model('User', UserSchema);
-mongoose.connect('mongodb://localhost/mydb');
+mongoose.connect('mongodb://localhost/SynergyCodeCredentials');            //set connect destination as needed!!!
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {
-  console.log('Connection successful.');    
+  console.log('DEBUG: Database connection successful.');
 });
 
 /**
@@ -86,12 +86,15 @@ var requiresLogin = function(req, res, next){
 passport.use(new LocalStrategy(function(username, password, done){
     User.findOne({username:username}, function(err, user){
         if(err){
+            console.log('DEBUG: User Object Not Found in Database');
             return done(err);
         }
         if(!user){
+            console.log('DEBUG: Incorrect Username');
             return done(null, false, {message: 'Incorrect username.'});
         }
         if(!user.validPassword(password)){
+            console.log('DEBUG: Incorrect Password');
             return done(null, false, {message: 'Incorrect password.'});
         }
         return done(null,user);
@@ -123,14 +126,14 @@ var signout = function(req, res){
 * creates the server
 **/
 var server = http.createServer(app).listen(app.get('port'), function () {
-    console.info('Express server listening on port ' + app.get('port'));
+    console.info('DEBUG: Server listening on port ' + app.get('port'));
 });
 
 /**
 * handlers for the server's GET requests
 **/
 app.get('/', pageRouter.index);
-app.get('/filetest', requiresLogin, pageRouter.filetest);
+app.get('/edit', requiresLogin, pageRouter.filetest);
 app.get('/logout', signout);
 app.get('/create', requiresLogin, pageRouter.create);
 
@@ -139,14 +142,14 @@ app.get('/create', requiresLogin, pageRouter.create);
 **/
 app.post('/login',
     passport.authenticate('local', {
-        successRedirect: '/filetest',
+        successRedirect: '/edit',
         failureRedirect: '/',
         failureFlash: true
     })
 );
 
 /**
-* compiles a list of files in editable files directory
+* compiles a list of files in editableFsiles directory
 **/
 var stringHeader = "<ul class='jqueryFileTree' style='display: none;'>";
 var stringFooter = "</ul>";
@@ -185,7 +188,6 @@ app.post('/loadFileTree', function (req, res) {
 
     // get a list of files
     fs.readdir(__dirname + '/public/editableFiles/', function (err, files) {
-
         for (var i = 0; i < files.length; i++) {
             var fileName = files[i];
             var path = util.format('%s%s', __dirname + '/public/editableFiles/', fileName);
@@ -200,16 +202,39 @@ app.post('/loadFileTree', function (req, res) {
     });
 });
 
+//tells socket io to listen to our server
 var sio = io.listen(server);
 
+//sets the authorization for socket
+sio.set('authorization', function (handshakeData, accept) {
+    if (handshakeData.headers.cookie) {
+        handshakeData.cookie = cookie.parse(handshakeData.headers.cookie);
+        handshakeData.sessionID = connect.utils.parseSignedCookie(handshakeData.cookie['express.sid'], 'secret');
+        if (handshakeData.cookie['express.sid'] == handshakeData.sessionID) {
+            return accept('Cookie is invalid.', false);
+        }
+    } else {
+        return accept('No cookie transmitted.', false);
+    }
+    accept(null, true);
+});
+
+/**
+* handles socket requests from front end
+**/
 sio.sockets.on('connection', function (socket) {
+    
+    //sends welcome message to chat
     socket.emit('message', {
         message: 'Welcome to the chat!'
     });
+    
+    //this handles the chat
     socket.on('send', function (data) {
         sio.sockets.emit('message', data);
     });
 
+    //loads a file into the editor
     socket.on('fileLoad', function (data) {
         filePath = data.message;
         fileNameArray = filePath.split("/");
@@ -224,7 +249,10 @@ sio.sockets.on('connection', function (socket) {
                 message: data
             });
         });
+        console.log('DEBUG: File Loaded');
     });
+    
+    //saves files to editableFiles directory
     socket.on('fileChanged', function (data) {
         fs.writeFile('public/editableFiles/' + fileName, data.message, function (err) {
             if (err) {
@@ -232,30 +260,14 @@ sio.sockets.on('connection', function (socket) {
             }
         });
     });
+
+    //creates a new file in editableFiles directory
     socket.on('createFile', function (data) {
         fs.writeFile('public/editableFiles/' + data.message, "", function (err) {
             if (err) {
                 throw err;
             }
+            console.log('DEBUG: File Created');
         });
     });
-});
-
-sio.set('authorization', function (handshakeData, accept) {
-
-    if (handshakeData.headers.cookie) {
-
-        handshakeData.cookie = cookie.parse(handshakeData.headers.cookie);
-
-        handshakeData.sessionID = connect.utils.parseSignedCookie(handshakeData.cookie['express.sid'], 'secret');
-
-        if (handshakeData.cookie['express.sid'] == handshakeData.sessionID) {
-            return accept('Cookie is invalid.', false);
-        }
-
-    } else {
-        return accept('No cookie transmitted.', false);
-    }
-
-    accept(null, true);
 });
