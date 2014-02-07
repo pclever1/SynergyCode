@@ -1,6 +1,5 @@
 #main-content {
 	margin-top: 65px;
-	background-color: grey;
 	width:100%;
 	padding: 0px;
 }
@@ -61,6 +60,9 @@ nav ul li {
 nav ul li:hover {
 	background: grey;
 }
+nav ul li a:hover {
+	color: white;
+}
 
 nav ul ul {
 	background: white; 
@@ -74,6 +76,7 @@ nav ul ul li {
 }
 nav ul ul li a:hover {
 	background: grey;
+	color: white;
 }
 #logo {
 	width: 60px;
