@@ -63,8 +63,8 @@
 
         <table id = "mainTable">
             <tr id = "headerow">
-                <td><h3>Code Editor</h3></td>
-                <td><h3>Live Preview</h3></td>
+                <td id = "editorHeader"><h3>Code Editor</h3></td>
+                <td id = "previewHeader"><h3>Live Preview</h3><input type = "button" id = "previewToggle" value = "Hide Preview" onclick="togglePreview()"></td>
             </tr>
             <tr>
                 <td><textarea id = "editor" rows = "20"></textarea></td>
@@ -73,7 +73,7 @@
         </table>
 
         <div id ="chatPulloutBar">
-            <img src="images/leftArrow.png">
+            <img src="images/topArrow.png">
         </div>
 
         <div id = "chatContainer">
@@ -81,7 +81,7 @@
                 <div id="content"></div>
                 <div class="controls">
                     <input type="text" id="name" placeHolder="Name"><br>
-                    <input type="text" id="field">
+                    <input type="text" id="field" placeHolder="Message(Enter To Send)">
                     <input type="button" value="send" id="send">
                 </div>
             </div>

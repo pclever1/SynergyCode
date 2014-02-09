@@ -18,13 +18,6 @@ $(document).ready(function () {
     });
 });
 
-//logout button
-// $('#logout').on('click', function () {
-//     socket.emit('logout');
-// });
-
-
-
 //editor
 function fileLoader(filePath) {
     socket.emit('fileLoad', {
@@ -58,6 +51,23 @@ editor.on('change', function (cMirror) {
     });
 });
 
+var previewDisplayed = true;
+function togglePreview(){
+    if(previewDisplayed){
+        $('[name="preview"]').hide();
+        $('#previewToggle').attr('value', 'Show Preview');
+        $('#previewHeader h3').hide();
+        editor.setSize("201%", "100%");
+        previewDisplayed = false;
+    }else{
+        $('[name="preview"]').show();
+        $('#previewToggle').attr('value', 'Hide Preview');
+        $('#previewHeader h3').show();
+        editor.setSize("100%", "100%");
+        previewDisplayed = true;
+    }
+}
+
 $(document).ready(function () {
     $('#editor').css("width", screen.width / 2);
 });
@@ -71,21 +81,21 @@ var chatOpen = false;
 $('#chatPulloutBar').on("click", function (e) {
     if (!chatOpen) {
         $('#chatContainer').animate({
-            "left": "-=20%"
+            "top": "-=35%"
         }, "slow");
         $('#chatPulloutBar').animate({
-            "left": "-=20%"
+            "top": "-=35%"
         }, "slow");
-        $('#chatPulloutBar img').attr("src", "images/rightArrow.png");
+        $('#chatPulloutBar img').attr("src", "images/bottomArrow.png");
         chatOpen = true;
     } else {
         $('#chatContainer').animate({
-            "left": "+=20%"
+            "top": "+=35%"
         }, "slow");
         $('#chatPulloutBar').animate({
-            "left": "+=20%"
+            "top": "+=35%"
         }, "slow");
-        $('#chatPulloutBar img').attr("src", "images/leftArrow.png");
+        $('#chatPulloutBar img').attr("src", "images/topArrow.png");
         chatOpen = false;
     }
     e.stopPropagation();
