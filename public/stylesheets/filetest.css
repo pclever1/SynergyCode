@@ -92,7 +92,7 @@
 
 #mainTable #headerow {
 
-    height: 10%;
+    height: 6%;
 
     text-align: center;
 
@@ -126,5 +126,5 @@ h1 {
 }
 
 body{
-    font-family: sans-serif;
+    font-family: 'Gauge'; 
 }

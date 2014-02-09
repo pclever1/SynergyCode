@@ -11,6 +11,7 @@ var express = require('express'),
     cookie = require('cookie'),
     passport = require('passport'),
     path = require('path'),
+    ObjectID = require('mongodb').ObjectID,
     mongoose = require('mongoose'),
     flash = require('connect-flash'),
     app = express();
@@ -37,6 +38,13 @@ app.use(flash());
 app.use(app.router);
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, '/public')));
+
+/**
+* creates the server
+**/
+var server = http.createServer(app).listen(app.get('port'), function () {
+    console.info('DEBUG: Server listening on port ' + app.get('port'));
+});
 
 /**
 * Strategy and Schema declaration for database access
@@ -66,7 +74,24 @@ var User = mongoose.model('User', UserSchema);
 mongoose.connect('mongodb://localhost/SynergyCodeCredentials');            //set connect destination as needed!!!
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function callback () {
+
+/**
+* makes sure the user collection in the database exists;
+* if it doesn't, the collection is created and a default admin profile is created
+**/
+db.once('open', function callback() {
+    mongoose.connection.db.collectionNames(function(err, names){
+        if(names.length == 0){
+            console.log('DEBUG: Database Is Empty; Creating admin Profile');
+            var user = {
+                _id: new ObjectID(),
+                username: 'admin',
+                password: 'admin',
+                account_level: 'admin'
+            };
+            db.collection('users').insert(user, function callback(){});
+        }
+    });
   console.log('DEBUG: Database connection successful.');
 });
 
@@ -86,7 +111,7 @@ var requiresLogin = function(req, res, next){
 passport.use(new LocalStrategy(function(username, password, done){
     User.findOne({username:username}, function(err, user){
         if(err){
-            console.log('DEBUG: User Object Not Found in Database');
+            console.log('DEBUG: Unknown Error While Querying Database');
             return done(err);
         }
         if(!user){
@@ -123,19 +148,22 @@ var signout = function(req, res){
 }
 
 /**
-* creates the server
-**/
-var server = http.createServer(app).listen(app.get('port'), function () {
-    console.info('DEBUG: Server listening on port ' + app.get('port'));
-});
-
-/**
 * handlers for the server's GET requests
 **/
 app.get('/', pageRouter.index);
 app.get('/edit', requiresLogin, pageRouter.filetest);
 app.get('/logout', signout);
 app.get('/create', requiresLogin, pageRouter.create);
+app.get('/admin', requiresLogin, function(req, res){
+    User.findOne({username: req.user.username}, function(err, user){
+        if(user.account_level == 'admin'){
+            res.render('adminPanel.ejs');
+        }else{
+            console.log('DEBUG: User Has Insufficient Permissions To Visit Admin Page.');
+            res.render('permissionProblem.ejs');
+        }
+    });
+});
 
 /**
 * handles server's login requests
@@ -239,7 +267,6 @@ sio.sockets.on('connection', function (socket) {
         filePath = data.message;
         fileNameArray = filePath.split("/");
         fileName = fileNameArray[fileNameArray.length - 1];
-        console.log(fileName);
         fs.readFile(__dirname + '/public/editableFiles/' + fileName, "utf8", function (err, data) {
             if (err) {
                 console.log(err);

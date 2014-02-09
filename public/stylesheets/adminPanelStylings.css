@@ -1,0 +1,52 @@
+body{
+	font-family: 'Gauge'; 
+}
+
+
+h1{
+	margin-left: 30%;
+	margin-right: 30%;
+	text-align: center;
+}
+
+hr{
+	color: black;
+}
+
+#menu{
+	margin-left: 17%;
+	margin-top: -10px;
+}
+
+#goBack{
+	position: relative;
+	top: -65px;
+}
+
+.tile{
+	height: 249px;
+	width: 275px;
+	margin-right: 10px;
+	margin-top: 8px;
+	border: 2px solid black;
+	text-align: center;
+	transition: background 200ms;
+	-webkit-transition: background 200ms;
+	background: #2673FF;
+	vertical-align: middle;
+}
+
+.tile h1{
+	width: 200px;
+	margin-left: 37px;
+	margin-top: 80px;
+	font-size: 30px;
+}
+
+.tile:hover{
+	background: #0000FF;
+}
+
+#menu a{
+	color: black;
+}	
