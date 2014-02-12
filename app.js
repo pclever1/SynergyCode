@@ -14,7 +14,12 @@ var express = require('express'),
     ObjectID = require('mongodb').ObjectID,
     mongoose = require('mongoose'),
     flash = require('connect-flash'),
-    app = express();
+    app = express(),
+    os = require('os'),
+    childProcess = require('child_process'),
+    ls,
+    User,
+    db;
 
 /**
 * some middleware setup
@@ -44,6 +49,47 @@ app.use(express.static(path.join(__dirname, '/public')));
 **/
 var server = http.createServer(app).listen(app.get('port'), function () {
     console.info('DEBUG: Server listening on port ' + app.get('port'));
+    console.info('Platform: ' + os.platform());
+    /**
+    * sets up User variable that utilizes UserSchema and sets up database connection
+    **/
+    ls = childProcess.exec(__dirname +'/mongodb/bin/mongod.exe', function (error, stdout, stderr) {
+        console.log('test');
+       if (error) {
+         console.log(error.stack);
+         console.log('DEBUG: Error code: '+error.code);
+         console.log('DEBUG: Signal received: '+error.signal);
+     }
+     console.log('DEBUG: Child Process STDOUT: '+stdout);
+     console.log('DEBUG: Child Process STDERR: '+stderr);
+ });
+
+    ls.on('exit', function (code) {
+       console.log('Child process exited with exit code '+code);
+   });
+    User = mongoose.model('User', UserSchema);
+    mongoose.connect('mongodb://localhost/SynergyCodeCredentials');            //set connect destination as needed!!!
+    db = mongoose.connection;
+    db.on('error', console.error.bind(console, 'connection error:'));
+    /**
+    * makes sure the user collection in the database exists;
+    * if it doesn't, the collection is created and a default admin profile is created
+    **/
+    db.once('open', function callback() {
+        mongoose.connection.db.collectionNames(function(err, names){
+            if(names.length == 0){
+                console.log('DEBUG: Database Is Empty; Creating admin Profile');
+                var user = {
+                    _id: new ObjectID(),
+                    username: 'admin',
+                    password: 'admin',
+                    account_level: 'admin'
+                };
+                db.collection('users').insert(user, function callback(){});
+            }
+        });
+        console.log('DEBUG: Database connection successful.');
+    });
 });
 
 /**
@@ -69,16 +115,16 @@ UserSchema.methods.validPassword = function(pass){
 
 /**
 * sets up User variable that utilizes UserSchema and sets up database connection
-**/
+**
 var User = mongoose.model('User', UserSchema);
 mongoose.connect('mongodb://localhost/SynergyCodeCredentials');            //set connect destination as needed!!!
 var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
+db.on('error', console.error.bind(console, 'connection error:'));**/
 
 /**
 * makes sure the user collection in the database exists;
 * if it doesn't, the collection is created and a default admin profile is created
-**/
+**
 db.once('open', function callback() {
     mongoose.connection.db.collectionNames(function(err, names){
         if(names.length == 0){
