@@ -74,7 +74,8 @@ var server = http.createServer(app).listen(app.get('port'), function () {
             console.log('stderr: ' + stderr);
             if (error !== null) {
               console.log('exec error: ' + error);
-          });
+            };
+        });
         ls = childProcess.exec(__dirname +'/mongodb/linux/mongod', ['--dbpath '+__dirname+'\mongodb\data'], function (error, stdout, stderr) {
             console.log('test');
             if (error) {
