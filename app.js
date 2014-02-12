@@ -53,20 +53,37 @@ var server = http.createServer(app).listen(app.get('port'), function () {
     /**
     * sets up User variable that utilizes UserSchema and sets up database connection
     **/
-    ls = childProcess.exec(__dirname +'/mongodb/bin/mongod.exe', function (error, stdout, stderr) {
-        console.log('test');
-       if (error) {
-         console.log(error.stack);
-         console.log('DEBUG: Error code: '+error.code);
-         console.log('DEBUG: Signal received: '+error.signal);
-     }
-     console.log('DEBUG: Child Process STDOUT: '+stdout);
-     console.log('DEBUG: Child Process STDERR: '+stderr);
- });
+    if(os.platform()=='win32'){
+        ls = childProcess.exec(__dirname +'/mongodb/win32/mongod.exe', ['--dbpath '+__dirname+'\mongodb\data'], function (error, stdout, stderr) {
+            console.log('test');
+            if (error) {
+                console.log(error.stack);
+                console.log('DEBUG: Error code: '+error.code);
+                console.log('DEBUG: Signal received: '+error.signal);
+            }
+            console.log('DEBUG: Child Process STDOUT: '+stdout);
+            console.log('DEBUG: Child Process STDERR: '+stderr);
+        });
 
-    ls.on('exit', function (code) {
-       console.log('Child process exited with exit code '+code);
-   });
+        ls.on('exit', function (code) {
+            console.log('Child process exited with exit code '+code);
+        });
+    }else if(os.platform()=='linux'){
+        ls = childProcess.exec(__dirname +'/mongodb/linux/mongod', ['--dbpath '+__dirname+'\mongodb\data'], function (error, stdout, stderr) {
+            console.log('test');
+            if (error) {
+                console.log(error.stack);
+                console.log('DEBUG: Error code: '+error.code);
+                console.log('DEBUG: Signal received: '+error.signal);
+            }
+            console.log('DEBUG: Child Process STDOUT: '+stdout);
+            console.log('DEBUG: Child Process STDERR: '+stderr);
+        });
+
+        ls.on('exit', function (code) {
+            console.log('Child process exited with exit code '+code);
+        });
+    };
     User = mongoose.model('User', UserSchema);
     mongoose.connect('mongodb://localhost/SynergyCodeCredentials');            //set connect destination as needed!!!
     db = mongoose.connection;
