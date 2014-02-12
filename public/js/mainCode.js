@@ -56,13 +56,13 @@ function togglePreview(){
     if(previewDisplayed){
         $('[name="preview"]').hide();
         $('#previewToggle').attr('value', 'Show Preview');
-        $('#previewHeader h3').hide();
+        $('#previewHeader').hide();
         editor.setSize("201%", "100%");
         previewDisplayed = false;
     }else{
         $('[name="preview"]').show();
         $('#previewToggle').attr('value', 'Hide Preview');
-        $('#previewHeader h3').show();
+        $('#previewHeader').show();
         editor.setSize("100%", "100%");
         previewDisplayed = true;
     }

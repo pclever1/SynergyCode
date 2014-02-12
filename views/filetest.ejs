@@ -54,17 +54,17 @@
     </nav>
     <br>
     <div id="main-content">
-        <h2 id = "fileMenuTitle">File Menu</h2>
-        <div id = "filetree">
-
-        </div>
-
+        <h3 id = "fileMenuTitle">File Menu</h3>
+        <div id = "filetree"></div>
         <a href = "/create">Create File</a>
 
+        
+
+        <input type = "button" id = "previewToggle" value = "Hide Preview" onclick="togglePreview()">
         <table id = "mainTable">
             <tr id = "headerow">
-                <td id = "editorHeader"><h3>Code Editor</h3></td>
-                <td id = "previewHeader"><h3>Live Preview</h3><input type = "button" id = "previewToggle" value = "Hide Preview" onclick="togglePreview()"></td>
+                <td id = "editorHeader">Code Editor</td>
+                <td id = "previewHeader">Live Preview</td>
             </tr>
             <tr>
                 <td><textarea id = "editor" rows = "20"></textarea></td>
