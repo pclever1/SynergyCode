@@ -54,7 +54,8 @@ var server = http.createServer(app).listen(app.get('port'), function () {
     * sets up User variable that utilizes UserSchema and sets up database connection
     **/
     if(os.platform()=='win32'){
-        ls = childProcess.exec(__dirname +'/mongodb/win32/mongod.exe', ['--dbpath '+__dirname+'\mongodb\data'], function (error, stdout, stderr) {
+        
+        ls = childProcess.exec(__dirname +'/mongodb/win32/mongod.exe', ['--dbpath '+__dirname+'/mongodb/data'], function (error, stdout, stderr) {
             console.log('test');
             if (error) {
                 console.log(error.stack);
@@ -69,6 +70,7 @@ var server = http.createServer(app).listen(app.get('port'), function () {
             console.log('Child process exited with exit code '+code);
         });
     }else if(os.platform()=='linux'){
+        childProcess.exec('chown', ['mongodb /mongodb/data/db']);
         ls = childProcess.exec(__dirname +'/mongodb/linux/mongod', ['--dbpath '+__dirname+'\mongodb\data'], function (error, stdout, stderr) {
             console.log('test');
             if (error) {
