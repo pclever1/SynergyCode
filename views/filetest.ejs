@@ -16,6 +16,9 @@
 
     <link rel="stylesheet" type="text/css" href="stylesheets/emojify.css">
     <script src="emojify.js"></script>
+    <script src="/channel/bcsocket.js"></script>
+    <script src="/share/share.js"></script>
+    <script src="/share/cm.js"></script>
 
 </head>
 
@@ -90,6 +93,9 @@
         <script src="js/mainCode.js"></script>
         <script type = "text/javascript" src = "chat.js"></script>
         <script>
+        sharejs.open('hello', 'text', function(error, doc) {
+            doc.attach_cm(editor);
+        });
         </script>
     </div>
 </body>
