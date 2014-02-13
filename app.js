@@ -66,8 +66,8 @@ var server = http.createServer(app).listen(app.get('port'), function () {
         ls.on('close', function (code) {
             console.log('child process exited with code ' + code);
         });
-    }else if(os.platform()=='linux'){
-        var chown = childProcess.spawn('chown', ['mongodb', '/mongodb/data/db'], function (error, stdout, stderr) {
+    }else/** if(os.platform()=='linux'){
+        var chown = childProcess.spawn('sudo', ['chown','mongodb', '/mongodb/data/db'], function (error, stdout, stderr) {
             console.log('stdout: ' + stdout);
             console.log('stderr: ' + stderr);
             if (error !== null) {
@@ -91,8 +91,8 @@ var server = http.createServer(app).listen(app.get('port'), function () {
         ls.on('close', function (code) {
             console.log('child process exited with code ' + code);
         });
-    }else{
-        console.log('butt');
+    }else**/{
+        console.log('OS not supported yet');
     };
     User = mongoose.model('User', UserSchema);
     mongoose.connect('mongodb://localhost/SynergyCodeCredentials');            //set connect destination as needed!!!
