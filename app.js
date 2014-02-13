@@ -55,19 +55,16 @@ var server = http.createServer(app).listen(app.get('port'), function () {
     **/
     if(os.platform()=='win32'){
         console.log('DEBUG: '+__dirname+'/mongodb/data');
-        ls = childProcess.exec(__dirname +'/mongodb/win32/mongod.exe', ['--dbpath', __dirname+'/mongodb/data'], function (error, stdout, stderr) {
-            console.log('DEBUG: db started');
-            if (error) {
-                console.log(error.stack);
-                console.log('DEBUG: Error code: '+error.code);
-                console.log('DEBUG: Signal received: '+error.signal);
-            }
-            console.log('DEBUG: Child Process STDOUT: '+stdout);
-            console.log('DEBUG: Child Process STDERR: '+stderr);
+        ls = childProcess.spawn(__dirname +'/mongodb/win32/mongod.exe', ['--dbpath', __dirname+'/mongodb/data']);
+        ls.stdout.on('data', function (data) {
+            console.log('DEBUG: db: ' + data);
+        });
+        ls.stderr.on('data', function (data) {
+            console.log('stderr: ' + data);
         });
 
-        ls.on('exit', function (code) {
-            console.log('Child process exited with exit code '+code);
+        ls.on('close', function (code) {
+            console.log('child process exited with code ' + code);
         });
     }else if(os.platform()=='linux'){
         var chown = childProcess.spawn('chown', ['mongodb', '/mongodb/data/db'], function (error, stdout, stderr) {
@@ -77,19 +74,22 @@ var server = http.createServer(app).listen(app.get('port'), function () {
               console.log('exec error: ' + error);
             };
         });
-        ls = childProcess.exec(__dirname +'/mongodb/linux/mongod', ['--dbpath '+__dirname+'/mongodb/data'], function (error, stdout, stderr) {
-            console.log('DEBUG: db started');
-            if (error) {
-                console.log(error.stack);
-                console.log('DEBUG: Error code: '+error.code);
-                console.log('DEBUG: Signal received: '+error.signal);
-            }
-            console.log('DEBUG: Child Process STDOUT: '+stdout);
-            console.log('DEBUG: Child Process STDERR: '+stderr);
+        chown.stdout.on('data', function (data) {
+            console.log('DEBUG: chown: '+ data);
+        });
+        chown.on('close', function (code) {
+            console.log('child process exited with code ' + code);
+        });
+        ls = childProcess.spawn(__dirname +'/mongodb/linux/mongod', ['--dbpath', __dirname+'/mongodb/data']);
+        ls.stdout.on('data', function (data) {
+            console.log('DEBUG: db: ' + data);
+        });
+        ls.stderr.on('data', function (data) {
+            console.log('stderr: ' + data);
         });
 
-        ls.on('exit', function (code) {
-            console.log('Child process exited with exit code '+code);
+        ls.on('close', function (code) {
+            console.log('child process exited with code ' + code);
         });
     }else{
         console.log('butt');
