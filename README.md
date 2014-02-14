@@ -19,4 +19,5 @@ GNU General Public License
 ##How to Use
 	node app
 	
+[Set-up Instructions](http://www.wiki.synergycode.org/index.php?title=Setup)	
 [Wiki Tutorials](http://wiki.synergycode.org/index.php?title=Tutorials) - everything from start to finish in a matter of minutes.
