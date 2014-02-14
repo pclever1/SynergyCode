@@ -78,25 +78,22 @@ jQuery.fn.stripTags = function () {
 };
 var chatOpen = false;
 
-$('#chatPulloutBar').on("click", function (e) {
-    if (!chatOpen) {
-        $('#chatContainer').animate({
-            "top": "-=35%"
-        }, "slow");
-        $('#chatPulloutBar').animate({
-            "top": "-=35%"
-        }, "slow");
-        $('#chatPulloutBar img').attr("src", "images/bottomArrow.png");
+$('#chatOpener').on("click", function (e) {
+    if(!chatOpen){
+        $('#draggable').show();
+        $('#chatOpener').text('Close Chat');
         chatOpen = true;
-    } else {
-        $('#chatContainer').animate({
-            "top": "+=35%"
-        }, "slow");
-        $('#chatPulloutBar').animate({
-            "top": "+=35%"
-        }, "slow");
-        $('#chatPulloutBar img').attr("src", "images/topArrow.png");
+    }else if(chatOpen){
+        $('#draggable').hide();
+        $('#chatOpener').text('Open Chat');
         chatOpen = false;
     }
-    e.stopPropagation();
 });
+
+//open sharejs
+sharejs.open('hello', 'text', function(error, doc) {
+    doc.attach_cm(editor);
+});
+
+//makes chat draggable
+$('#draggable').draggable();

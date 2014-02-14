@@ -4,6 +4,9 @@
     <title><%= title %></title>
     <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript" src="js/jquery.js"></script>
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css">
+    <script type= "text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <script type= "text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/ui/jquery.ui.draggable.js"></script>
     <script type="text/javascript" src="jqueryFileTree/jqueryFileTree.js"></script>
     <link rel="stylesheet" media="screen" href="http://openfontlibrary.org/face/gauge" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="stylesheets/filetest.css">
@@ -13,7 +16,6 @@
     <script src="js/codemirror.js"></script>
     <script src="js/xml.js"></script>
     <script src="js/active-line.js"></script>
-
     <link rel="stylesheet" type="text/css" href="stylesheets/emojify.css">
     <script src="emojify.js"></script>
     <script src="/channel/bcsocket.js"></script>
@@ -23,11 +25,10 @@
 </head>
 
 <body>
-
     <nav>
         <ul id="ul-menu">
             <li id="logo"><a href="/"><img id="logo" src="images/logo.png" alt=""></a></li>
-            <li id="menu"><a href="">File</a>
+            <li class = "menu"><a href="">File</a>
                 <ul>
                     <li id="list"><a href="/create">New</a></li>
                     <li id="list"><a href="">Upload</a></li>
@@ -35,22 +36,26 @@
                     <li id="list"><a href="">Close</a></li>
                 </ul>
             </li>
-            <li id="menu"><a href="">Edit</a>
+            <li class = "menu"><a href="">Edit</a>
                 <ul>
                     <li id="list"><a href="">Copy</a></li>
                     <li id="list"><a href="">Cut</a></li>
                     <li id="list"><a href="">Paste</a></li>
                 </ul>
             </li>
-            <li id="menu"><a href=""></a>
+            <li class = "menu"><a href=""></a>
                 <ul>
                 </ul>
             </li>
-            <li id="menu"><a href="">Help</a></li>
+            <li class = "menu"><a href="">Help</a></li>
             <li id="user"><a href="">User</a>
                 <ul>
                     <li id="list"><a href="/logout">Logout</a></li>
                     <li id="list"><a href="/admin">Admin Panel</a></li>
+                </ul>
+            </li>
+            <li class = "menu" id = "chatOpener">Open Chat
+                <ul>
                 </ul>
             </li>
         </ul>
@@ -58,10 +63,7 @@
     <br>
     <div id="main-content">
         <h3 id = "fileMenuTitle">File Menu</h3>
-        <div id = "filetree"></div>
-        <a href = "/create">Create File</a>
-
-        
+        <div id = "filetree"></div>        
 
         <input type = "button" id = "previewToggle" value = "Hide Preview" onclick="togglePreview()">
         <table id = "mainTable">
@@ -75,28 +77,23 @@
             </tr>
         </table>
 
-        <div id ="chatPulloutBar">
-            <img src="images/topArrow.png">
-        </div>
+        <div id="draggable" class="ui-widget-content">
 
-        <div id = "chatContainer">
-            <div id="chat">
-                <div id="content"></div>
-                <div class="controls">
-                    <input type="text" id="name" placeHolder="Name"><br>
-                    <input type="text" id="field" placeHolder="Message(Enter To Send)">
-                    <input type="button" value="send" id="send">
+            <div id = "chatContainer">
+                <div id="chat">
+                    <div id="content"></div>
+                    <div class="controls">
+                        <input type="text" id="name" placeHolder="Name"><br>
+                        <input type="text" id="field" placeHolder="Message(Enter To Send)">
+                        <input type="button" value="send" id="send">
+                    </div>
                 </div>
             </div>
+
         </div>
 
         <script src="js/mainCode.js"></script>
         <script type = "text/javascript" src = "chat.js"></script>
-        <script>
-        sharejs.open('hello', 'text', function(error, doc) {
-            doc.attach_cm(editor);
-        });
-        </script>
     </div>
 </body>
 

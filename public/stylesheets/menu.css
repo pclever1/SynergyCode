@@ -3,6 +3,9 @@
 	width:100%;
 	padding: 0px;
 }
+#chatOpener:hover{
+	color: white;
+}
 nav ul ul {
 	display: none;
 }
@@ -47,7 +50,7 @@ nav ul li {
 	float: left;
 
 }
-#menu{
+.menu{
 	text-align: center;
 	width: 100px;
 	border-right: solid 1px grey;

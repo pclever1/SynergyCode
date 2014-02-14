@@ -1,34 +1,18 @@
-#chatPulloutBar{
-    position: fixed;
-    top: 97%;
-    left: 82%;
-    width: 15.1%;
-    height: 3%;
-    background-color: #4F4F4F;
-    z-index: 3;
-    border: 2px solid black;
-}
-
-#chatPulloutBar img{
+#draggable {
     position: absolute;
-    top: -2px;
-    left: 44%;
-    width: 15%;
-}
-
-#chatPulloutBar:hover{
-    background-color: gray;
-    transition: background-color 400ms;
-    -webkit-transition: background-color 400ms;
+    top: 52%;
+    left: 85%;
+    display: none;
+    width: 200px; 
+    height: 300px; 
+    z-index: 5; 
 }
 
 #chatContainer{
-    position: fixed;
-    margin-top: 65px;
-    left: 82%;
-    top: 90%;
-    height: 25%;
-    width: 15%;
+    position: relative;
+    left: -3px;
+    width: 100%;
+    height: 234px;
     border: 2px solid black;
     background-color: #D6D6C2;
     z-index: 3;
@@ -37,24 +21,14 @@
 .controls{  
     position: relative;
     left: -2px;
-    height: 40%;
-    width: 101%;
+    width: 100%;
+    height: 60px;
     background-color: #4F4F4F;
     border: 2px solid black;
 }
 
 #send{
     display: none;
-}
-
-#name{
-    margin-top: 5px;
-    margin-left: 9%;
-}
-
-#field{
-    margin-top: 5px;
-    margin-left: 9%;
 }
 
 #content{
@@ -64,7 +38,14 @@
 }
 
 #field{
-    width: 80%;
+    width: 95%;
+    margin-left: 3px;
+}
+
+#name{
+    width: 95%;
+    margin-top: 3px;
+    margin-left: 3px;
 }
 
 #logout{
@@ -79,12 +60,6 @@
     left: 92.1%;
     z-index: 3;
 }
-
-
-#name{
-    width: 80%;
-}
-
 
 #fileMenuTitle {
 
@@ -118,6 +93,8 @@
     width: 85%;
 
     height: 90%;
+
+    table-layout: fixed;
 
 }
 

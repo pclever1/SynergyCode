@@ -121,7 +121,7 @@ var server = http.createServer(app).listen(app.get('port'), function () {
             console.log('child process exited with code ' + code);
         });
     }else**/{
-        console.log('ERROR: OS db not supported yet');
+        console.log('DEBUG: OS support still in progress; features may be unstable');
     };
     
 });
@@ -153,16 +153,16 @@ UserSchema.methods.validPassword = function(pass){
 
 /**
 * sets up User variable that utilizes UserSchema and sets up database connection
-**
+**/
 var User = mongoose.model('User', UserSchema);
 mongoose.connect('mongodb://localhost/SynergyCodeCredentials');            //set connect destination as needed!!!
 var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));**/
+db.on('error', console.error.bind(console, 'connection error:'));
 
 /**
 * makes sure the user collection in the database exists;
 * if it doesn't, the collection is created and a default admin profile is created
-**
+**/
 db.once('open', function callback() {
     mongoose.connection.db.collectionNames(function(err, names){
         if(names.length == 0){
