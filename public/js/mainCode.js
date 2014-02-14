@@ -18,6 +18,38 @@ $(document).ready(function () {
     });
 });
 
+/**
+* gets an array of all the files in the editable files folder
+**/
+
+var fileList; //stores the received array
+
+socket.emit('getFileList', {message: 'Getting File List'});
+socket.on('fileListSent', function(data){
+    fileList = data.message;
+    loadEditorInstances();
+});
+
+function initCodemirror(id){
+    var cm = CodeMirror.fromTextArea(id, {
+        mode: "application/xml",
+        styleActiveLine: true,
+        lineNumbers: true,
+        lineWrapping: true,
+        theme: 'monokai'
+    });
+    return cm;
+}
+
+var editor = initCodemirror(document.getElementById('editor'));
+
+function loadEditorInstances(){
+    for(var i = 0; i<fileList.length; i++){
+
+    }
+}
+
+
 //editor
 function fileLoader(filePath) {
     socket.emit('fileLoad', {
@@ -33,14 +65,6 @@ function preview(file) {
 socket.on('fileData', function (data) {
     editor.setValue(data.message);
     preview(data.message);
-});
-
-var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
-    mode: "application/xml",
-    styleActiveLine: true,
-    lineNumbers: true,
-    lineWrapping: true,
-    theme: 'monokai'
 });
 
 editor.on('change', function (cMirror) {
@@ -90,7 +114,7 @@ $('#chatOpener').on("click", function (e) {
     }
 });
 
-//open sharejs
+//open sharejs session
 sharejs.open('hello', 'text', function(error, doc) {
     doc.attach_cm(editor);
 });
