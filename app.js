@@ -288,8 +288,6 @@ var createStatCallback = (function (res, path, fileName, isLast) {
     }
 });
 
-var fileList;
-
 /**
 * passes the compiled list of files to file tree on front end
 **/
@@ -302,7 +300,6 @@ app.post('/loadFileTree', function (req, res) {
 
     // get a list of files
     fs.readdir(__dirname + '/public/editableFiles/', function (err, files) {
-        fileList = files;
         for (var i = 0; i < files.length; i++) {
             var fileName = files[i];
             var path = util.format('%s%s', __dirname + '/public/editableFiles/', fileName);
@@ -383,9 +380,5 @@ sio.sockets.on('connection', function (socket) {
             }
             console.log('DEBUG: File Created');
         });
-    });
-
-    socket.on('getFileList', function(){
-        socket.emit('fileListSent', {message: fileList});
     });
 });

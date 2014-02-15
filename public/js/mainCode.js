@@ -1,11 +1,11 @@
 //Authorization
 var socket = io.connect(location.hostname);
 socket.on('error', function (reason) {
-    console.error('Unable to connect Socket.IO', reason);
+    console.error('DEBUG: Unable to connect Socket.IO', reason);
 });
 
 socket.on('connect', function (data) {
-    console.info('successfully established a working and authorized connection');
+    console.info('DEBUG: Successfully established a working and authorized connection');
 });
 
 //filetree structure
@@ -16,18 +16,6 @@ $(document).ready(function () {
     }, function (file) {
         fileLoader(file);
     });
-});
-
-/**
-* gets an array of all the files in the editable files folder
-**/
-
-var fileList; //stores the received array
-
-socket.emit('getFileList', {message: 'Getting File List'});
-socket.on('fileListSent', function(data){
-    fileList = data.message;
-    loadEditorInstances();
 });
 
 function initCodemirror(id){
@@ -42,13 +30,6 @@ function initCodemirror(id){
 }
 
 var editor = initCodemirror(document.getElementById('editor'));
-
-function loadEditorInstances(){
-    for(var i = 0; i<fileList.length; i++){
-
-    }
-}
-
 
 //editor
 function fileLoader(filePath) {
@@ -114,10 +95,10 @@ $('#chatOpener').on("click", function (e) {
     }
 });
 
+//makes chat draggable
+$('#draggable').draggable();
+
 //open sharejs session
 sharejs.open('hello', 'text', function(error, doc) {
     doc.attach_cm(editor);
 });
-
-//makes chat draggable
-$('#draggable').draggable();
