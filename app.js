@@ -369,6 +369,7 @@ sio.sockets.on('connection', function (socket) {
             if (err) {
                 throw err;
             }
+            console.log('fileChanged event received on server');
         });
     });
 
