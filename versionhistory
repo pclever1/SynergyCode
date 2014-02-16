@@ -41,8 +41,42 @@ V 0.0.6 (2/14/2014)
 -Colaboration finish
 -Styling finished
 
+V 0.0.7 (2/17/2014)
+-Windows Installer
 
-V 0.1 (2/21/2014)
--Installer (npm)
--User Permissionos
--Webserver
+V 0.0.8 (2/20/2014)
+-Linux Installer
+
+V 0.0.9 (2/21/2014)
+-Bug fixes
+  -logo link to edit page
+  -remove broken links
+  -loading page
+-Formating on all pages
+
+V 0.1 
+-User accounts and settings
+
+V 0.1.1
+-CSS files with dynamic previews
+
+V 0.1.2
+-Mobile device friendly
+
+V 0.2
+-File permissions
+
+V 0.3
+-Groups
+
+V 0.3.1
+-Groups page
+
+V 0.3.2
+-Files page with file tree (all files on server, admin tool)
+
+V 0.3.3
+-File tree of active files
+  -settings to rename, delte, and add groups/permissions to file on click
+
+
