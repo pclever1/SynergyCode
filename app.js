@@ -56,7 +56,7 @@ var server = http.createServer(app).listen(app.get('port'), function () {
     **/
     if (os.platform() == 'win32') {
         console.log('DEBUG: ' + __dirname + '/mongodb/data');
-        ls = childProcess.spawn(__dirname + '/mongodb/win32/mongod.exe', ['--journal', '--dbpath', __dirname + '/mongodb/data']);
+        ls = childProcess.spawn(__dirname + '/mongodb/win32/mongod.exe', ['--dbpath', __dirname + '/mongodb/data']);
         // ls.stdout.on('data', function (data) {
         //     console.log('DEBUG: db: ' + data);
         // });
@@ -67,33 +67,6 @@ var server = http.createServer(app).listen(app.get('port'), function () {
         ls.on('close', function (code) {
             console.log('child process exited with code ' + code);
         });
-        setTimeout(function () {
-            User = mongoose.model('User', UserSchema);
-            mongoose.connect('mongodb://localhost/SynergyCodeCredentials'); //set connect destination as needed!!!
-            db = mongoose.connection;
-            db.on('error', console.error.bind(console, 'connection error:'));
-            /**
-             * makes sure the user collection in the database exists;
-             * if it doesn't, the collection is created and a default admin profile is created
-             **/
-             db.once('open', function callback() {
-                mongoose.connection.db.collectionNames(function (err, names) {
-                    if (names.length == 0) {
-                        console.log('DEBUG: Database Is Empty; Creating admin Profile');
-                        var user = {
-                            _id: new ObjectID(),
-                            username: 'admin',
-                            password: 'admin',
-                            account_level: 'admin'
-                        };
-                        db.collection('users').insert(user, function callback() {
-                            console.log('DEBUG: Admin Profile created');
-                        });
-                    }
-                });
-                console.log('DEBUG: Database connection successful.');
-            });
-     }, 2000);
        
     }else/** if(os.platform()=='linux'){
         var chown = childProcess.spawn('sudo', ['chown','mongodb', '/mongodb/data/db'], function (error, stdout, stderr) {
@@ -123,6 +96,33 @@ var server = http.createServer(app).listen(app.get('port'), function () {
     }else**/{
         console.log('DEBUG: OS support still in progress; features may be unstable');
     };
+    setTimeout(function () {
+            User = mongoose.model('User', UserSchema);
+            mongoose.connect('mongodb://localhost/SynergyCodeCredentials'); //set connect destination as needed!!!
+            db = mongoose.connection;
+            db.on('error', console.error.bind(console, 'connection error:'));
+            /**
+             * makes sure the user collection in the database exists;
+             * if it doesn't, the collection is created and a default admin profile is created
+             **/
+             db.once('open', function callback() {
+                mongoose.connection.db.collectionNames(function (err, names) {
+                    if (names.length == 0) {
+                        console.log('DEBUG: Database Is Empty; Creating admin Profile');
+                        var user = {
+                            _id: new ObjectID(),
+                            username: 'admin',
+                            password: 'admin',
+                            account_level: 'admin'
+                        };
+                        db.collection('users').insert(user, function callback() {
+                            console.log('DEBUG: Admin Profile created');
+                        });
+                    }
+                });
+                console.log('DEBUG: Database connection successful.');
+            });
+     }, 2000);
     
 });
 
@@ -154,30 +154,30 @@ UserSchema.methods.validPassword = function(pass){
 /**
 * sets up User variable that utilizes UserSchema and sets up database connection
 **/
-var User = mongoose.model('User', UserSchema);
-mongoose.connect('mongodb://localhost/SynergyCodeCredentials');            //set connect destination as needed!!!
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
+// var User = mongoose.model('User', UserSchema);
+// mongoose.connect('mongodb://localhost/SynergyCodeCredentials');            //set connect destination as needed!!!
+// var db = mongoose.connection;
+// db.on('error', console.error.bind(console, 'connection error:'));
 
-/**
-* makes sure the user collection in the database exists;
-* if it doesn't, the collection is created and a default admin profile is created
-**/
-db.once('open', function callback() {
-    mongoose.connection.db.collectionNames(function(err, names){
-        if(names.length == 0){
-            console.log('DEBUG: Database Is Empty; Creating admin Profile');
-            var user = {
-                _id: new ObjectID(),
-                username: 'admin',
-                password: 'admin',
-                account_level: 'admin'
-            };
-            db.collection('users').insert(user, function callback(){});
-        }
-    });
-  console.log('DEBUG: Database connection successful.');
-});
+// /**
+// * makes sure the user collection in the database exists;
+// * if it doesn't, the collection is created and a default admin profile is created
+// **/
+// db.once('open', function callback() {
+//     mongoose.connection.db.collectionNames(function(err, names){
+//         if(names.length == 0){
+//             console.log('DEBUG: Database Is Empty; Creating admin Profile');
+//             var user = {
+//                 _id: new ObjectID(),
+//                 username: 'admin',
+//                 password: 'admin',
+//                 account_level: 'admin'
+//             };
+//             db.collection('users').insert(user, function callback(){});
+//         }
+//     });
+//   console.log('DEBUG: Database connection successful.');
+// });
 
 /**
 * requiresLogin - allows for authentication to take place in a GET request before certain pages are accessed
